@@ -2,3 +2,5 @@
 
 
 .terraform/
+
+tf_env/
