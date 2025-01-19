@@ -1,11 +1,12 @@
 
 # How I Built and Deployed My AWS-Powered Portfolio Website Using Git, Terraform, and AWS Services
 
-💻 Check out my portfolio: www.uwaismansuri.com
+
 
 ## Introduction
 As a cloud engineer, I wanted to showcase my skills and demonstrate how AWS services can work together to create a robust and secure portfolio website. In this project, I outline the steps taken to build and deploy an AWS-hosted portfolio website using Git, Terraform, and a suite of AWS services.
 
+💻 Check out my portfolio: www.uwaismansuri.com
 ---
 
 ## Architecture
