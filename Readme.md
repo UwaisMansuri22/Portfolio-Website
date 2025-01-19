@@ -6,6 +6,12 @@ As a cloud engineer, I wanted to showcase my skills and demonstrate how AWS serv
 
 ---
 
+## Architecture
+![app7](https://github.com/user-attachments/assets/bedee5ef-5113-496f-8d17-73bd6c119478)
+
+
+---
+
 ## Step 1: Infrastructure as Code with Terraform
 - **What I Did**: Used Terraform to define AWS resources as code, ensuring repeatable and consistent deployments.
 - **Why**: Terraform allows version control and automates resource provisioning for scalability and efficiency.
