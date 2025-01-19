@@ -139,7 +139,7 @@ As a cloud engineer, I wanted to showcase my skills and demonstrate how AWS serv
 - **What I Did**: Integrated a Git pipeline to automate deployments.
 - <div align="center">
          <img src="https://github.com/user-attachments/assets/ba34fe61-7329-4b96-94cb-6618fa53302e" alt="Automated Deployment" width="80%">
-         <p><em>Figure 10: GitHub Actions deployment</em></p>
+         <p><em>Figure 11: GitHub Actions deployment</em></p>
        </div>
 
 
