@@ -137,6 +137,12 @@ As a cloud engineer, I wanted to showcase my skills and demonstrate how AWS serv
 ## Step 7: Automating Deployment with Git Pipeline
 
 - **What I Did**: Integrated a Git pipeline to automate deployments.
+- <div align="center">
+         <img src="https://github.com/user-attachments/assets/ba34fe61-7329-4b96-94cb-6618fa53302e" alt="Automated Deployment" width="80%">
+         <p><em>Figure 10: GitHub Actions deployment</em></p>
+       </div>
+
+
 - **Why**: Ensures that any changes pushed to GitHub are automatically deployed to S3, saving time and reducing manual errors.
 
 ---
