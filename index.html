@@ -29,88 +29,69 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <style>
-    .chat-toggle {
-      position: fixed;
-      visibility: hidden;
-      opacity: 0;
-      right: 15px;
-      bottom: -15px;
-      z-index: 99999;
-      background-color: var(--accent-color);
-      width: 44px;
-      height: 44px;
-      border-radius: 50px;
-      transition: all 0.4s;
+  /* Chat floating button */
+  .chat-toggle {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    right: 15px;
+    bottom: -15px;
+    z-index: 99999;
+    background-color: var(--accent-color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
 
-      i {
-        font-size: 24px;
-        color: var(--contrast-color);
-        line-height: 0;
-      }
+  .chat-toggle i {
+    font-size: 30px;
+    color: var(--contrast-color);
+    line-height: 0;
+  }
 
-      &:hover {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
-        color: var(--contrast-color);
-      }
+  .chat-toggle:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+    color: var(--contrast-color);
+  }
 
-      &.active {
-        visibility: visible;
-        opacity: 1;
-        bottom: 15px;
-      }
-    }
+  .chat-toggle.active {
+    visibility: visible;
+    opacity: 1;
+    bottom: 15px;
+  }
 
-    .chat-toggle {
-      position: fixed;
-      visibility: hidden;
-      opacity: 0;
-      right: 15px;
-      bottom: -15px;
-      z-index: 99999;
-      background-color: var(--accent-color);
-      width: 60px;
-      height: 60px;
-      border-radius: 50px;
-      transition: all 0.4s;
+  /* Chat popup */
+  .chat-overlay {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    z-index: 1000;
+    width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-      i {
-        font-size: 30px;
-        color: var(--contrast-color);
-        line-height: 0;
-      }
+  .hide-element {
+    visibility: hidden !important;
+  }
 
-      &:hover {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
-        color: var(--contrast-color);
-      }
-
-      &.active {
-        visibility: visible;
-        opacity: 1;
-        bottom: 15px;
-      }
-    }
-
-    .chat-overlay {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-      z-index: 1000;
-      width: 400px;
-      max-height: 500vh;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
-    }
-
-    .hide-element {
-      visibility: hidden !important;
-    }
-  </style>
+  /* Recruiter pack section */
+  .recruiter-pack .btn {
+    min-width: 320px;
+  }
+</style>
 </head>
 
 <body class="index-page">
 
   <script>
+  // Config (update these after you deploy new APIs)
+  window.CHATBOT_API_URL = 'https://32xvqg8ob2.execute-api.us-east-1.amazonaws.com/default/ChatBot-Lambda';
+  window.RECRUITER_PACK_API_URL = 'https://5okbj9mn9b.execute-api.us-east-1.amazonaws.com/prod/generate-pack';
+
     function showChat(element) {
       const toggle = document.getElementById("chat-toggle");
       const chat = document.getElementById("chat-box");
@@ -140,7 +121,7 @@
         </div>
       </div>`;
 
-      fetch('https://32xvqg8ob2.execute-api.us-east-1.amazonaws.com/default/ChatBot-Lambda', {
+      fetch(window.CHATBOT_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -169,6 +150,79 @@
         console.error('Error:', error);
       });
     }
+
+  // Recruiter One‑Click Pack (AI‑generated)
+  function setRecruiterPackStatus(msg, isError) {
+    const el = document.getElementById('generate-pack-status');
+    if (!el) return;
+    el.style.display = 'block';
+    el.style.color = isError ? '#dc3545' : '';
+    el.textContent = msg;
+  }
+
+  async function generateRecruiterPack() {
+    const apiUrl = window.RECRUITER_PACK_API_URL;
+    if (!apiUrl || apiUrl.indexOf('REPLACE_ME') !== -1) {
+      setRecruiterPackStatus('Recruiter Pack API is not configured yet. Update window.RECRUITER_PACK_API_URL in index.html.', true);
+      return;
+    }
+
+    const btn = document.getElementById('generate-pack-btn');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Generating…';
+    }
+    setRecruiterPackStatus('Generating PDF…', false);
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode: 'generic' })
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error('Request failed: ' + res.status + ' ' + text);
+      }
+
+      const data = await res.json();
+
+      // Support both shapes:
+      // 1) Direct JSON: { downloadUrl: "..." }
+      // 2) Lambda proxy: { statusCode, headers, body: "{\"downloadUrl\":\"...\"}" }
+      let downloadUrl = data && data.downloadUrl;
+      if (!downloadUrl && data && typeof data.body === 'string') {
+        try {
+          const parsedBody = JSON.parse(data.body);
+          downloadUrl = parsedBody && parsedBody.downloadUrl;
+        } catch (_) {
+          // ignore JSON parse errors
+        }
+      }
+
+      if (!downloadUrl) {
+        throw new Error('API response missing downloadUrl');
+      }
+
+      setRecruiterPackStatus('Download starting…', false);
+      window.location.href = downloadUrl;
+    } catch (e) {
+      setRecruiterPackStatus('Failed to generate pack: ' + (e && e.message ? e.message : e), true);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Generate 1‑Page Recruiter Pack (PDF)';
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('generate-pack-btn');
+    if (btn) {
+      btn.addEventListener('click', generateRecruiterPack);
+    }
+  });
   </script>
 
   <!-- Header Section -->
@@ -207,6 +261,26 @@
     </div>
   </section>
 
+  <!-- Recruiter One‑Click Pack Section -->
+  <section id="recruiter-pack" class="recruiter-pack section">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Recruiter One‑Click Pack</h2>
+        <p>Generate a 1‑page PDF summary of my fit for Cloud / Platform / SRE roles (AWS + Observability + IaC + Production case studies).</p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <button id="generate-pack-btn" class="btn btn-primary" type="button">
+            Generate 1‑Page Recruiter Pack (PDF)
+          </button>
+          <p id="generate-pack-status" style="margin-top:10px; display:none;"></p>
+          <small style="display:block; margin-top:6px; opacity:0.8;">Powered by AWS Bedrock + Lambda + S3 pre‑signed delivery.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer Section -->
   <footer id="footer" class="footer dark-background">
     <div class="container">
@@ -228,9 +302,9 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a id="chat-toggle" class="chat-toggle d-flex align-items-center justify-content-center active">
-    <img src="assets/tags/chat-bubble.png" alt="Chat Toggle" onclick="showChat(event)" style="width: 24px; height: 24px;">
-</a>
+  <a id="chat-toggle" class="chat-toggle d-flex align-items-center justify-content-center active" role="button" aria-label="Open chat" onclick="showChat(event)">
+    <img src="assets/tags/chat-bubble.png" alt="Chat" style="width: 24px; height: 24px;">
+  </a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
