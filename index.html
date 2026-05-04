@@ -1,462 +1,2055 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Uwais Mansuri - Portfolio</title>
-  <meta name="description" content="Portfolio website of Uwais Mansuri, Cloud Engineer and Data Scientist">
-  <meta name="keywords" content="Cloud Engineer, Data Scientist, Portfolio, Uwais Mansuri">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uwais Mansuri — Cloud Platform &amp; SRE Engineer</title>
+<meta name="description" content="Cloud Platform &amp; SRE Engineer with 4+ years at Cigna Healthcare. AWS infrastructure, AI-powered tooling, healthcare cloud.">
+<meta name="keywords" content="Cloud Platform Engineer, SRE, AI Platform Engineer, AWS, Bedrock, Terraform, Uwais Mansuri">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-base: #050A14;
+  --bg-surface: #0A1628;
+  --bg-elevated: #0F1F3D;
+  --accent-primary: #00D4FF;
+  --accent-secondary: #7C3AED;
+  --accent-green: #00FF88;
+  --accent-amber: #FFB800;
+  --text-primary: #F0F4FF;
+  --text-secondary: #8892A4;
+  --text-muted: #4A5568;
+  --border: #1A2B45;
+  --border-glow: rgba(0,212,255,0.2);
+  --ease: cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+ul { list-style: none; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.section-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+section { padding: 6rem 0; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+/* NAV */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1.25rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.3s var(--ease), backdrop-filter 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+#navbar.scrolled {
+  background: rgba(5,10,20,0.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-weight: 700; font-size: 1.05rem; color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.nav-brand span { color: var(--accent-primary); }
+.nav-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  border: 1.5px solid rgba(0,212,255,0.45);
+  box-shadow: 0 0 8px rgba(0,212,255,0.2);
+  flex-shrink: 0;
+}
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--accent-primary);
+  transform: scaleX(0); transition: transform 0.2s var(--ease);
+}
+.nav-links a:hover, .nav-links a.active { color: var(--accent-primary); }
+.nav-links a.active::after { transform: scaleX(1); }
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  padding: 4px; background: none; border: none;
+}
+.nav-toggle span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text-primary);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-mobile {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(5,10,20,0.98); backdrop-filter: blur(16px);
+  z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); transition: color 0.2s; }
+.nav-mobile a:hover { color: var(--accent-primary); }
+.nav-mobile-close {
+  position: absolute; top: 1.5rem; right: 2rem;
+  font-size: 1.5rem; color: var(--text-secondary); background: none; border: none; cursor: pointer;
+}
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 0;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(0,212,255,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 40%, rgba(124,58,237,0.06) 0%, transparent 55%);
+}
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  background: #050A14;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 1200px; margin: 0 auto; padding: 2rem;
+  display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: center;
+}
+.hero-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--accent-primary);
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;
+}
+.hero-label::before {
+  content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--accent-primary);
+}
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700; line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+.hero h1 span { color: var(--accent-primary); }
+.hero-sub {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 480px; line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.5rem; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 600;
+  transition: all 0.25s var(--ease);
+}
+.btn-primary {
+  background: var(--accent-primary); color: #050A14;
+}
+.btn-primary:hover {
+  background: #fff; transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,212,255,0.35);
+}
+.btn-outline {
+  border: 1px solid var(--border); color: var(--text-primary);
+}
+.btn-outline:hover {
+  border-color: var(--accent-primary); color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px var(--border-glow);
+}
+.btn-ghost {
+  border: 1px solid var(--border); color: var(--text-secondary);
+}
+.btn-ghost:hover {
+  border-color: var(--text-secondary); color: var(--text-primary);
+  transform: translateY(-2px);
+}
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+/* TERMINAL */
+.terminal {
+  background: #050A14;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.1);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+}
+.terminal-bar {
+  background: #0A1628;
+  padding: 0.75rem 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.term-dot { width: 12px; height: 12px; border-radius: 50%; }
+.term-dot.red   { background: #FF5F57; }
+.term-dot.amber { background: #FFBD2E; }
+.term-dot.green { background: #28C840; }
+.terminal-title {
+  margin-left: auto; margin-right: auto;
+  font-size: 0.7rem; color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+.terminal-body {
+  padding: 1.25rem 1.25rem 1rem;
+  min-height: 280px;
+  line-height: 1.7;
+}
+.term-line { display: block; min-height: 1.4em; }
+.t-prompt { color: var(--accent-green); }
+.t-green  { color: var(--accent-green); }
+.t-cyan   { color: var(--accent-primary); }
+.t-white  { color: var(--text-primary); }
+.t-muted  { color: var(--text-muted); }
+.t-amber  { color: var(--accent-amber); }
+.term-cursor {
+  display: inline-block; width: 8px; height: 1em;
+  background: var(--accent-green); vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+/* ABOUT */
+#about { background: var(--bg-base); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 4rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+@media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+.about-photo-col { position: relative; }
+.about-photo {
+  width: 100%; border-radius: 18px;
+  object-fit: cover; object-position: center top;
+  border: 1px solid rgba(0,212,255,0.2);
+  box-shadow: 0 0 0 4px rgba(0,212,255,0.05), 0 20px 60px rgba(0,0,0,0.4);
+  display: block;
+  max-height: 480px;
+}
+.about-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem;
+  margin-top: 1rem;
+}
+.about-stat {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 12px; padding: 0.9rem 0.75rem; text-align: center;
+}
+.about-stat-num { font-size: 1.4rem; font-weight: 700; color: var(--accent-primary); line-height: 1; }
+.about-stat-label { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; }
+.about-bio { display: flex; flex-direction: column; gap: 1rem; }
+.about-bio p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; }
+.about-bio p strong { color: var(--text-primary); font-weight: 600; }
+.about-edu {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+.about-edu-card {
+  display: flex; align-items: flex-start; gap: 0.9rem;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 12px; padding: 0.9rem 1rem;
+  transition: border-color 0.3s;
+}
+.about-edu-card:hover { border-color: rgba(0,212,255,0.25); }
+.about-edu-icon {
+  width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.about-edu-icon.ms { background: rgba(0,212,255,0.1); }
+.about-edu-icon.bs { background: rgba(124,58,237,0.1); }
+.about-edu-degree { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+.about-edu-school { font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.1rem; }
+.about-edu-year { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.1rem; font-family: 'JetBrains Mono', monospace; }
+.about-interests {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.about-interest {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; color: var(--text-secondary);
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 999px; padding: 0.3rem 0.75rem;
+}
 
-  <style>
-    /* Chat floating button */
-    .chat-toggle {
-      position: fixed;
-      visibility: hidden;
-      opacity: 0;
-      right: 15px;
-      bottom: -15px;
-      z-index: 99999;
-      background-color: var(--accent-color);
-      width: 60px;
-      height: 60px;
-      border-radius: 50px;
-      transition: all 0.4s;
-      cursor: pointer;
-    }
+/* PROJECTS */
+#projects { background: var(--bg-surface); overflow: hidden; }
 
-    .chat-toggle i {
-      font-size: 30px;
-      color: var(--contrast-color);
-      line-height: 0;
-    }
+/* PROJECTS CAROUSEL */
+.projects-carousel-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 20px 0 40px;
+}
+.projects-carousel-wrapper::-webkit-scrollbar { display: none; }
+.projects-carousel-wrapper.grabbing { cursor: grabbing; }
+.projects-carousel {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  padding: 0 60px;
+}
+.project-card {
+  width: 420px;
+  height: 580px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #0A1628;
+  border: 1px solid #1A2B45;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.project-card:hover { transform: translateY(-4px); }
+.project-card.alarmbrain:hover {
+  box-shadow: 0 0 30px rgba(0,212,255,0.25);
+  border-color: rgba(0,212,255,0.3);
+}
+.project-card.clinicalscribe:hover,
+.project-card.glow-purple:hover {
+  box-shadow: 0 0 30px rgba(124,58,237,0.25);
+  border-color: rgba(124,58,237,0.3);
+}
+.project-card.glow-cyan:hover {
+  box-shadow: 0 0 30px rgba(0,212,255,0.25);
+  border-color: rgba(0,212,255,0.3);
+}
+.card-mockup {
+  flex-shrink: 0;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid #1A2B45;
+}
+.card-content {
+  flex: 1;
+  display: flex; flex-direction: column;
+  padding: 24px;
+  overflow: hidden;
+}
+.card-tags {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.scroll-hint {
+  text-align: center;
+  font-size: 12px;
+  color: #4A5568;
+  margin-top: 8px;
+  letter-spacing: 0.1em;
+}
 
-    .chat-toggle:hover {
-      background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
-      color: var(--contrast-color);
-    }
+.proj-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: all 0.3s var(--ease);
+  display: flex; flex-direction: column;
+}
+.proj-card:hover {
+  transform: translateY(-4px);
+}
+.proj-card.cyan-card:hover {
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 20px 60px rgba(0,212,255,0.12), 0 0 0 1px rgba(0,212,255,0.15);
+}
+.proj-card.purple-card:hover {
+  border-color: rgba(124,58,237,0.4);
+  box-shadow: 0 20px 60px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.15);
+}
+.proj-mockup {
+  height: 220px; position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.proj-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
+.proj-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem; border-radius: 999px;
+  margin-bottom: 1rem;
+}
+.badge-cyan { background: rgba(0,212,255,0.1); color: var(--accent-primary); border: 1px solid rgba(0,212,255,0.2); }
+.badge-purple { background: rgba(124,58,237,0.1); color: #A78BFA; border: 1px solid rgba(124,58,237,0.2); }
+.proj-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem; }
+.proj-subtitle { font-size: 0.8rem; color: var(--accent-primary); font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.proj-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem; flex: 1; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.proj-tag {
+  font-size: 0.72rem; font-weight: 500;
+  padding: 0.25rem 0.65rem; border-radius: 6px;
+  background: var(--bg-surface); color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.proj-links { display: flex; gap: 0.75rem; }
+.proj-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1.1rem; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 600;
+  transition: all 0.2s var(--ease);
+}
+.proj-link.live {
+  background: var(--accent-primary); color: #050A14;
+}
+.proj-link.live:hover { background: #fff; box-shadow: 0 4px 16px rgba(0,212,255,0.4); }
+.proj-link.gh {
+  border: 1px solid var(--border); color: var(--text-secondary);
+}
+.proj-link.gh:hover { border-color: var(--text-primary); color: var(--text-primary); }
 
-    .chat-toggle.active {
-      visibility: visible;
-      opacity: 1;
-      bottom: 15px;
-    }
+/* AlarmBrain mockup */
+.ab-mockup {
+  background: #050A14; padding: 1rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+  height: 100%; display: flex; flex-direction: column;
+}
+.ab-bar {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin-bottom: 0.75rem; padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.ab-dot { width: 8px; height: 8px; border-radius: 50%; }
+.ab-title { font-size: 0.62rem; color: var(--text-muted); margin-left: auto; margin-right: auto; }
+.ab-line { line-height: 1.65; opacity: 0; animation: abLine 9s ease infinite; }
+.ab-line:nth-child(1)  { animation-delay: 0.0s; }
+.ab-line:nth-child(2)  { animation-delay: 0.4s; }
+.ab-line:nth-child(3)  { animation-delay: 0.8s; }
+.ab-line:nth-child(4)  { animation-delay: 1.1s; }
+.ab-line:nth-child(5)  { animation-delay: 1.4s; }
+.ab-line:nth-child(6)  { animation-delay: 1.7s; }
+.ab-line:nth-child(7)  { animation-delay: 2.0s; }
+.ab-line:nth-child(8)  { animation-delay: 2.3s; }
+.ab-line:nth-child(9)  { animation-delay: 2.6s; }
+.ab-line:nth-child(10) { animation-delay: 2.9s; }
+.ab-line:nth-child(11) { animation-delay: 3.2s; }
+.ab-line:nth-child(12) { animation-delay: 3.5s; }
+@keyframes abLine {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  70%  { opacity: 1; }
+  85%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.p2-badge {
+  display: inline-block; background: rgba(255,184,0,0.2);
+  color: var(--accent-amber); border: 1px solid rgba(255,184,0,0.3);
+  padding: 0 0.35rem; border-radius: 4px; font-size: 0.62rem; font-weight: 700;
+}
 
-    /* Chat popup */
-    .chat-overlay {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-      z-index: 1000;
-      width: 400px;
-      max-height: 80vh;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
-      border-radius: 12px;
-    }
+/* ClinicalScribe mockup */
+.cs-mockup {
+  background: #050A14;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+  height: 100%; display: flex; flex-direction: column;
+}
+.cs-chrome {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.75rem; background: #070D1A;
+  border-bottom: 1px solid #1A2B45;
+}
+.cs-chrome-title { font-size: 0.6rem; color: #4A6080; margin: 0 auto; }
+.cs-audio-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 0.75rem; border-bottom: 1px solid #1A2B45;
+}
+.cs-audio-label { font-size: 0.58rem; color: #4A6080; white-space: nowrap; }
+.cs-waveform { flex: 1; display: flex; align-items: center; gap: 2px; height: 18px; }
+.cs-wave-bar {
+  width: 2px; background: #00D4FF; border-radius: 1px;
+  animation: csWave 1.4s ease-in-out infinite;
+}
+@keyframes csWave {
+  0%, 100% { height: 3px; opacity: 0.25; }
+  50%       { height: var(--h, 10px); opacity: 0.9; }
+}
+.cs-body { flex: 1; padding: 0.55rem 0.75rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.cs-title-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 0.35rem; border-bottom: 1px solid #1A2B45; margin-bottom: 0.1rem;
+}
+.cs-title { font-size: 0.6rem; color: #6B8096; }
+.cs-ai-badge {
+  font-size: 0.55rem; font-weight: 600; padding: 0.1rem 0.4rem; border-radius: 999px;
+  background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.25);
+}
+.cs-section {
+  display: flex; gap: 0.4rem; align-items: flex-start;
+  opacity: 0; animation: csFade 8s ease infinite;
+}
+.cs-section:nth-child(2) { animation-delay: 0.0s; }
+.cs-section:nth-child(3) { animation-delay: 1.2s; }
+.cs-section:nth-child(4) { animation-delay: 2.4s; }
+.cs-section:nth-child(5) { animation-delay: 3.6s; }
+@keyframes csFade {
+  0%   { opacity: 0; transform: translateY(4px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  75%  { opacity: 1; }
+  90%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.cs-letter {
+  width: 16px; min-width: 16px; height: 16px; flex-shrink: 0;
+  border-radius: 3px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem; font-weight: 800; color: #fff;
+}
+.cs-s { background: #3B82F6; }
+.cs-o { background: #10B981; }
+.cs-a { background: #F59E0B; }
+.cs-p { background: #8B5CF6; }
+.cs-text { color: #607A94; line-height: 1.4; font-size: 0.6rem; font-family: 'Inter', sans-serif; }
+.cs-text strong { color: #8AA4BE; }
 
-    .hide-element {
-      visibility: hidden !important;
-    }
+/* ECHO */
+#echo { background: var(--bg-base); }
+.echo-container {
+  max-width: 860px; margin: 3rem auto 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(0,212,255,0.08), 0 32px 80px rgba(0,0,0,0.5);
+}
+.echo-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+}
+.echo-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem; color: #fff; flex-shrink: 0;
+}
+.echo-header-text h3 { font-size: 1rem; font-weight: 700; }
+.echo-header-text p { font-size: 0.78rem; color: var(--text-muted); }
+.echo-powered {
+  margin-left: auto;
+  font-size: 0.68rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.echo-powered span { color: var(--accent-secondary); }
+.echo-pills {
+  padding: 1rem 2rem;
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.15);
+}
+.echo-pill {
+  font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; transition: all 0.2s var(--ease);
+  background: none;
+}
+.echo-pill:hover {
+  border-color: var(--accent-primary); color: var(--accent-primary);
+  background: rgba(0,212,255,0.06);
+}
+.echo-messages {
+  height: 340px; overflow-y: auto;
+  padding: 1.5rem 2rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  scroll-behavior: smooth;
+}
+.echo-messages::-webkit-scrollbar { width: 4px; }
+.echo-messages::-webkit-scrollbar-track { background: transparent; }
+.echo-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.echo-msg {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  animation: msgIn 0.3s var(--ease);
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.echo-msg.user { flex-direction: row-reverse; }
+.echo-msg-avatar {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700;
+}
+.echo-msg-avatar.bot {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fff;
+}
+.echo-msg-avatar.usr {
+  background: var(--bg-elevated); color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.echo-bubble {
+  max-width: 75%; padding: 0.75rem 1rem;
+  border-radius: 14px; font-size: 0.875rem; line-height: 1.6;
+}
+.echo-msg.bot .echo-bubble {
+  background: var(--bg-elevated); color: var(--text-primary);
+  border: 1px solid var(--border); border-top-left-radius: 4px;
+}
+.echo-msg.user .echo-bubble {
+  background: var(--accent-primary); color: #050A14;
+  font-weight: 500; border-top-right-radius: 4px;
+}
+.echo-link { color: var(--accent-primary); text-decoration: underline; }
+.echo-heading { display: block; font-weight: 700; margin-bottom: 0.25rem; }
+.echo-li { display: block; padding-left: 0.75rem; position: relative; }
+.echo-li::before { content: '•'; position: absolute; left: 0; color: var(--accent-primary); }
+.typing-indicator {
+  display: flex; align-items: center; gap: 4px; padding: 0.75rem 1rem;
+}
+.typing-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-primary);
+  animation: typeDot 1.4s ease infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typeDot {
+  0%,80%,100% { transform: scale(0.5); opacity: 0.4; }
+  40%          { transform: scale(1); opacity: 1; }
+}
+.echo-input-row {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 0.75rem;
+}
+.echo-input {
+  flex: 1; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.75rem 1rem; color: var(--text-primary);
+  font-family: inherit; font-size: 0.875rem;
+  outline: none; transition: border-color 0.2s;
+}
+.echo-input:focus { border-color: var(--accent-primary); }
+.echo-input::placeholder { color: var(--text-muted); }
+.echo-send {
+  background: var(--accent-primary); color: #050A14;
+  border: none; border-radius: 10px;
+  padding: 0.75rem 1.25rem; font-weight: 700; font-size: 0.875rem;
+  cursor: pointer; transition: all 0.2s var(--ease);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.echo-send:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,212,255,0.35); }
+.echo-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* Recruiter pack section */
-    .recruiter-pack .btn {
-      min-width: 320px;
-    }
+/* TIMELINE */
+#experience {
+  background: var(--bg-surface);
+  padding: 5rem 0 6rem;
+  overflow: visible;
+}
+#experience .container { max-width: 1200px; }
+.timeline {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .timeline { grid-template-columns: 1fr; }
+}
+.tl-entry {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  position: relative;
+  transition: border-color 0.3s var(--ease);
+}
+.tl-entry:hover { border-color: rgba(0,212,255,0.25); }
+.tl-entry.tl-purple:hover { border-color: rgba(124,58,237,0.25); }
+.tl-accent-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; border-radius: 16px 0 0 16px;
+  background: var(--accent-primary);
+}
+.tl-accent-bar.purple { background: var(--accent-secondary); }
+.tl-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 0.75rem;
+  margin-bottom: 0.5rem; flex-wrap: wrap;
+}
+.tl-header-left { flex: 1; }
+.tl-period {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+  color: var(--accent-primary); text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace; margin-bottom: 0.35rem;
+}
+.tl-period.purple { color: #A78BFA; }
+.tl-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.tl-company-row { font-size: 0.8rem; color: var(--text-secondary); }
+.tl-company-row span { color: var(--text-muted); }
+.tl-badge {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 999px;
+  background: rgba(0,212,255,0.1); color: var(--accent-primary);
+  border: 1px solid rgba(0,212,255,0.25); white-space: nowrap; flex-shrink: 0;
+}
+.tl-chips {
+  display: flex; flex-wrap: wrap; gap: 0.3rem;
+  margin: 0.9rem 0;
+}
+.tl-chip {
+  font-size: 0.65rem; font-weight: 500;
+  padding: 0.18rem 0.55rem; border-radius: 5px;
+  background: var(--bg-surface); color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.tl-divider { height: 1px; background: var(--border); margin-bottom: 0.9rem; }
+.tl-items { display: flex; flex-direction: column; gap: 0.5rem; }
+.tl-item {
+  font-size: 0.82rem; color: var(--text-secondary);
+  display: flex; gap: 0.6rem; align-items: baseline; line-height: 1.55;
+}
+.tl-item::before { content: '·'; color: var(--accent-primary); flex-shrink: 0; font-size: 1rem; }
 
-    .quick-btns .btn {
-      margin-right: 6px;
-      margin-top: 6px;
-    }
-  </style>
+/* TECH STACK */
+#stack { background: var(--bg-base); }
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem; margin-top: 3rem;
+}
+.stack-cluster {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem;
+  transition: border-color 0.3s;
+}
+.stack-cluster:hover { border-color: rgba(0,212,255,0.2); }
+.cluster-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.cluster-icon { font-size: 1.1rem; }
+.cluster-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  font-size: 0.75rem; padding: 0.3rem 0.7rem; border-radius: 6px;
+  background: var(--bg-elevated); color: var(--text-secondary);
+  border: 1px solid var(--border);
+  cursor: default; transition: all 0.2s var(--ease);
+  position: relative;
+}
+.skill-tag:hover { color: var(--text-primary); border-color: rgba(0,212,255,0.3); }
+.skill-tag[data-proof]:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+.skill-tag[data-proof]::after {
+  content: '✓ Proven in ' attr(data-proof);
+  position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elevated); border: 1px solid var(--accent-primary);
+  color: var(--accent-primary); font-size: 0.65rem; font-weight: 600;
+  padding: 0.25rem 0.6rem; border-radius: 6px;
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s; z-index: 10;
+}
+.skill-tag[data-proof]:hover::after { opacity: 1; }
+.stack-langs {
+  grid-column: 1 / -1;
+}
+
+/* MORE PROJECTS */
+#more { background: var(--bg-surface); }
+.more-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; margin-top: 3rem;
+}
+.more-card {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.5rem;
+  transition: all 0.3s var(--ease);
+  display: flex; flex-direction: column;
+}
+.more-card:hover {
+  border-color: rgba(0,212,255,0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+.more-card-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.more-card-cat {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent-primary); margin-bottom: 0.5rem;
+}
+.more-card-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.more-card-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; flex: 1; margin-bottom: 1.25rem; }
+.more-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.more-tag {
+  font-size: 0.68rem; padding: 0.2rem 0.55rem; border-radius: 4px;
+  background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border);
+}
+.more-link {
+  font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: color 0.2s;
+}
+.more-link:hover { color: var(--accent-primary); }
+
+/* CERTIFICATIONS */
+#certs { background: var(--bg-base); }
+.certs-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; margin-top: 3rem;
+}
+.cert-card {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.75rem 1.25rem;
+  text-align: center;
+  transition: all 0.3s var(--ease);
+  display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+}
+.cert-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.cert-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.cert-icon.blue  { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); }
+.cert-icon.orange{ background: rgba(234,88,12,0.15); border: 1px solid rgba(234,88,12,0.3); }
+.cert-icon.purple{ background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); }
+.cert-name { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+.cert-issuer { font-size: 0.68rem; color: var(--text-muted); }
+
+/* CONTACT */
+#contact { background: var(--bg-surface); }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; margin-top: 3rem; align-items: start;
+}
+.contact-info h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; }
+.contact-info p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem; }
+.h1b-notice {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(255,184,0,0.08); border: 1px solid rgba(255,184,0,0.25);
+  color: var(--accent-amber); padding: 0.5rem 1rem; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 600; margin-bottom: 1.75rem;
+}
+.contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1.25rem; border-radius: 10px;
+  border: 1px solid var(--border); color: var(--text-secondary);
+  font-size: 0.875rem; font-weight: 500;
+  transition: all 0.2s var(--ease);
+}
+.contact-link:hover {
+  border-color: var(--accent-primary); color: var(--accent-primary);
+  background: rgba(0,212,255,0.05);
+}
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-label { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); }
+.form-input, .form-textarea {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.8rem 1rem;
+  color: var(--text-primary); font-family: inherit; font-size: 0.875rem;
+  outline: none; transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--accent-primary); }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+.form-textarea { resize: vertical; min-height: 110px; }
+.form-submit {
+  background: var(--accent-primary); color: #050A14;
+  border: none; border-radius: 10px;
+  padding: 0.875rem 1.5rem; font-weight: 700; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.2s var(--ease);
+  align-self: flex-start;
+}
+.form-submit:hover { background: #fff; box-shadow: 0 4px 16px rgba(0,212,255,0.35); }
+.form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.form-status { font-size: 0.82rem; padding: 0.5rem 0; }
+.form-status.ok  { color: var(--accent-green); }
+.form-status.err { color: #f87171; }
+
+/* FOOTER */
+footer {
+  background: var(--bg-base);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 2rem; text-align: center;
+}
+.footer-name { font-weight: 700; margin-bottom: 0.4rem; }
+.footer-sub { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.6; }
+.footer-copy { font-size: 0.75rem; color: var(--text-muted); }
+
+/* MEDIA QUERIES */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .terminal { display: none; }
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+  .stack-grid { grid-template-columns: 1fr; }
+  .projects-carousel { padding: 0 20px; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  section { padding: 4rem 0; }
+  .certs-grid { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 2.8rem; }
+  .hero-btns { flex-direction: column; }
+  .echo-pills { padding: 0.75rem 1rem; }
+  .echo-input-row { padding: 1rem; }
+  .echo-messages { padding: 1rem; height: 280px; }
+  .echo-header { padding: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .fade-up { opacity: 1; transform: none; }
+}
+
+/* FIX 10 — Z-INDEX LAYERING (all page content above fixed canvas) */
+section, footer { position: relative; z-index: 1; }
+
+/* FIX 8 — THEME TOGGLE BUTTON */
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; line-height: 1;
+  transition: all 0.3s ease;
+  margin-left: 24px; color: var(--text-primary); flex-shrink: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 12px rgba(0,212,255,0.3);
+}
+@media (max-width: 600px) { .theme-toggle { margin-left: 8px; } }
+
+/* FIX 8 — LIGHT MODE */
+body.light-mode {
+  --bg-base: #F0F4FF;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #E8EDF8;
+  --text-primary: #0A1628;
+  --text-secondary: #3D5066;
+  --text-muted: #8892A4;
+  --border: #D0D8E8;
+  --border-glow: rgba(0,102,204,0.2);
+  --accent-primary: #0066CC;
+  --accent-green: #00875A;
+  background-color: #F0F4FF;
+  background-image: radial-gradient(#0066CC22 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+/* Scrolled navbar in light mode */
+body.light-mode #navbar.scrolled {
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 1px 0 var(--border), 0 2px 12px rgba(0,0,0,0.08);
+}
+/* Hero in light mode: frosted light panel so dark text is readable */
+body.light-mode .hero {
+  --text-primary: #0A1628;
+  --text-secondary: #3D5066;
+  --accent-primary: #0066CC;
+}
+body.light-mode .hero-inner {
+  background: rgba(240,244,255,0.82);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+}
+/* Nav links visible in light mode */
+body.light-mode #navbar .nav-links a { color: #0A1628; }
+body.light-mode #navbar .nav-links a:hover { color: #0066CC; }
+body.light-mode #navbar .nav-brand { color: #0A1628; }
+body.light-mode #navbar .nav-brand span { color: #0066CC; }
+/* btn-outline readable in light mode */
+body.light-mode .btn-outline { color: #0A1628; border-color: #0A1628; }
+body.light-mode .btn-outline:hover { color: #0066CC; border-color: #0066CC; }
+/* Echo section always stays dark */
+body.light-mode #echo {
+  --bg-surface: #0A1628;
+  --bg-elevated: #0F1F3D;
+  --text-primary: #F0F4FF;
+  --text-secondary: #8892A4;
+  --border: #1A2B45;
+  --accent-primary: #00D4FF;
+}
+/* Non-hero, non-echo sections get white overlay in light mode */
+body.light-mode section:not(#hero):not(#echo) { background: rgba(240,244,255,0.95); }
+body.light-mode footer { background: rgba(240,244,255,0.97) !important; }
+/* Canvas fades slightly in light mode but stays dark */
+body.light-mode #particles-canvas { opacity: 0.4; }
+/* Skill tags in light mode */
+body.light-mode .skill-tag { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
+body.light-mode .skill-tag:hover { border-color: #93C5FD; }
+body.light-mode .skill-tag[data-proof]:hover { color: #0066CC; border-color: #0066CC; }
+/* Timeline dot in light mode */
+body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,204,0.5); }
+</style>
 </head>
+<body>
 
-<body class="index-page">
+<!-- FIXED CONSTELLATION CANVAS — always behind all content -->
+<canvas id="particles-canvas"></canvas>
 
-  <script>
-    // ==========================
-    // Config
-    // ==========================
-    // ✅ NEW Bedrock Chatbot endpoint
-    window.CHATBOT_API_URL = 'https://5okbj9mn9b.execute-api.us-east-1.amazonaws.com/prod/chat';
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a href="#home" class="nav-brand"><img src="assets/img/Uwais.png" alt="Uwais Mansuri" class="nav-avatar">Uwais <span>Mansuri</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#echo">Echo</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark mode">☀</button>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <button class="nav-mobile-close" id="nav-mobile-close">✕</button>
+  <a href="#home">Home</a>
+  <a href="#projects">Projects</a>
+  <a href="#echo">Echo AI</a>
+  <a href="#experience">Experience</a>
+  <a href="#stack">Tech Stack</a>
+  <a href="#contact">Contact</a>
+</div>
 
-    // Recruiter Pack endpoint (keep as-is)
-    window.RECRUITER_PACK_API_URL = 'https://5okbj9mn9b.execute-api.us-east-1.amazonaws.com/prod/generate-pack';
-
-    // ==========================
-    // Chat UI open/close
-    // ==========================
-    function showChat() {
-      const toggle = document.getElementById("chat-toggle");
-      const chat = document.getElementById("chat-box");
-      chat.classList.remove("hide-element");
-      toggle.classList.add("hide-element");
-    }
-
-    function hideChat() {
-      const chat = document.getElementById("chat-box");
-      const toggle = document.getElementById("chat-toggle");
-      toggle.classList.remove("hide-element");
-      chat.classList.add("hide-element");
-    }
-
-    // ==========================
-    // Chat history (so it feels GenAI)
-    // ==========================
-    const CHAT_HISTORY_KEY = "uwais_portfolio_chat_history_v1";
-
-    function loadHistory() {
-      try { return JSON.parse(localStorage.getItem(CHAT_HISTORY_KEY) || "[]"); }
-      catch { return []; }
-    }
-
-    function saveHistory(history) {
-      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify((history || []).slice(-20)));
-    }
-
-    function clearHistory() {
-      localStorage.removeItem(CHAT_HISTORY_KEY);
-      const body = document.getElementById("chat-body");
-      if (body) body.innerHTML = "";
-    }
-
-    // Prevent HTML injection inside bubbles
-    function escapeHtml(str) {
-      return (str || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function appendUserMessage(bodyEl, message) {
-      bodyEl.innerHTML += `<div>
-        <div class="d-flex justify-content-end">
-          <p class="small mb-1 text-white">You</p>
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-label">Cloud Platform &amp; SRE Engineer</div>
+      <h1>Uwais<br><span>Mansuri</span></h1>
+      <p class="hero-sub">Building production-grade cloud infrastructure and AI-powered tools for regulated healthcare.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">→ View Projects</a>
+        <a href="#echo" class="btn btn-outline">◆ Talk to Echo</a>
+        <a href="assets/Uwais-Mansuri-Resume.pdf" class="btn btn-ghost" download="Uwais-Mansuri-Resume.pdf">↓ Resume</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="term-dot red"></span>
+          <span class="term-dot amber"></span>
+          <span class="term-dot green"></span>
+          <span class="terminal-title mono">alarmbrain — zsh</span>
         </div>
-        <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-          <div>
-            <p class="small p-2 mb-3 text-white rounded-3" style="background-color: #ff6a1c;">${escapeHtml(message)}</p>
+        <div class="terminal-body mono" id="terminal-output"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label">Featured Work</span>
+      <h2 class="section-title">Projects that ship.</h2>
+    </div>
+  </div>
+  <div class="projects-carousel-wrapper">
+    <div class="projects-carousel">
+
+      <!-- 1. AlarmBrain -->
+      <div class="project-card featured alarmbrain fade-up">
+        <div class="card-mockup" style="height:220px">
+          <div class="ab-mockup">
+            <div class="ab-bar">
+              <span class="ab-dot" style="background:#FF5F57"></span>
+              <span class="ab-dot" style="background:#FFBD2E"></span>
+              <span class="ab-dot" style="background:#28C840"></span>
+              <span class="ab-title">alarmbrain — incident brief</span>
+            </div>
+            <span class="ab-line t-prompt">$ alarmbrain analyze --alarm quote-processor-throttles</span>
+            <span class="ab-line t-green">✓ Classified: lambda_throttle</span>
+            <span class="ab-line t-green">✓ Fetching domain context...</span>
+            <span class="ab-line t-green">✓ Calling Claude API...</span>
+            <span class="ab-line t-muted">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+            <span class="ab-line t-white" style="font-weight:600">INCIDENT BRIEF &nbsp; INC-8FBF611F</span>
+            <span class="ab-line t-muted">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+            <span class="ab-line"><span class="t-cyan">Severity </span><span class="p2-badge">P2</span></span>
+            <span class="ab-line"><span class="t-cyan">Cause &nbsp;&nbsp;&nbsp;</span><span class="t-white"> Lambda concurrency limit hit</span></span>
+            <span class="ab-line"><span class="t-cyan">Action &nbsp;&nbsp;</span><span class="t-white"> Check SQS queue depth</span></span>
+            <span class="ab-line t-muted">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
           </div>
         </div>
-      </div>`;
-      bodyEl.scrollTop = bodyEl.scrollHeight;
-    }
-
-    function appendBotMessage(bodyEl, message) {
-      bodyEl.innerHTML += `<div>
-        <div class="d-flex justify-content-between">
-          <p class="small mb-1 text-white">AI</p>
-        </div>
-        <div class="d-flex flex-row justify-content-start">
-          <div>
-            <p class="small p-2 mb-3 rounded-3" style="background-color: white;">${escapeHtml(message)}</p>
+        <div class="card-content">
+          <div class="proj-badge badge-cyan">⚡ GenAI · Cloud · Healthcare</div>
+          <div class="proj-title">AlarmBrain</div>
+          <div class="proj-subtitle">AI Incident Intelligence</div>
+          <p class="proj-desc">Transforms raw CloudWatch alarms into structured incident briefs with probable cause, immediate actions, and healthcare business impact. Built from 4 years of production SRE at Cigna.</p>
+          <div class="card-tags">
+            <div class="proj-tags">
+              <span class="proj-tag">FastAPI</span>
+              <span class="proj-tag">Lambda</span>
+              <span class="proj-tag">Claude API</span>
+              <span class="proj-tag">SNS</span>
+              <span class="proj-tag">S3</span>
+              <span class="proj-tag">Terraform</span>
+            </div>
+            <div class="proj-links">
+              <a href="https://ctw2dztdc9.execute-api.us-east-1.amazonaws.com" target="_blank" rel="noreferrer" class="proj-link live">→ Live Demo</a>
+              <a href="https://github.com/UwaisMansuri22/AlarmBrain" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+            </div>
           </div>
         </div>
-      </div>`;
-      bodyEl.scrollTop = bodyEl.scrollHeight;
-    }
+      </div>
 
-    async function askChat() {
-      const body = document.getElementById("chat-body");
-      const input = document.getElementById("message-text");
+      <!-- 2. ClinicalScribe -->
+      <div class="project-card featured clinicalscribe fade-up" style="transition-delay:0.05s">
+        <div class="card-mockup" style="height:220px">
+          <div class="cs-mockup">
+            <!-- chrome bar -->
+            <div class="cs-chrome">
+              <div class="ab-dot" style="background:#FF5F57"></div>
+              <div class="ab-dot" style="background:#FFBD2E"></div>
+              <div class="ab-dot" style="background:#28CA41"></div>
+              <span class="cs-chrome-title">clinicalscribe — encounter.mp3</span>
+            </div>
+            <!-- audio waveform row -->
+            <div class="cs-audio-row">
+              <span class="cs-audio-label">▶ transcribing</span>
+              <div class="cs-waveform">
+                <div class="cs-wave-bar" style="--h:14px;animation-delay:0.00s"></div>
+                <div class="cs-wave-bar" style="--h:7px; animation-delay:0.10s"></div>
+                <div class="cs-wave-bar" style="--h:16px;animation-delay:0.20s"></div>
+                <div class="cs-wave-bar" style="--h:5px; animation-delay:0.30s"></div>
+                <div class="cs-wave-bar" style="--h:18px;animation-delay:0.40s"></div>
+                <div class="cs-wave-bar" style="--h:9px; animation-delay:0.50s"></div>
+                <div class="cs-wave-bar" style="--h:13px;animation-delay:0.60s"></div>
+                <div class="cs-wave-bar" style="--h:6px; animation-delay:0.70s"></div>
+                <div class="cs-wave-bar" style="--h:17px;animation-delay:0.80s"></div>
+                <div class="cs-wave-bar" style="--h:11px;animation-delay:0.90s"></div>
+                <div class="cs-wave-bar" style="--h:15px;animation-delay:1.00s"></div>
+                <div class="cs-wave-bar" style="--h:8px; animation-delay:1.10s"></div>
+              </div>
+              <span class="cs-audio-label" style="color:#00D4FF">→ SOAP</span>
+            </div>
+            <!-- SOAP body -->
+            <div class="cs-body">
+              <div class="cs-title-row">
+                <span class="cs-title">Patient Encounter — SOAP Note</span>
+                <span class="cs-ai-badge">AI Generated</span>
+              </div>
+              <div class="cs-section">
+                <span class="cs-letter cs-s">S</span>
+                <span class="cs-text"><strong>Subjective:</strong> Shortness of breath on exertion, onset 3 days ago.</span>
+              </div>
+              <div class="cs-section">
+                <span class="cs-letter cs-o">O</span>
+                <span class="cs-text"><strong>Objective:</strong> BP 142/88, HR 94, SpO₂ 96%, lungs clear.</span>
+              </div>
+              <div class="cs-section">
+                <span class="cs-letter cs-a">A</span>
+                <span class="cs-text"><strong>Assessment:</strong> Hypertensive urgency, r/o cardiac etiology.</span>
+              </div>
+              <div class="cs-section">
+                <span class="cs-letter cs-p">P</span>
+                <span class="cs-text"><strong>Plan:</strong> Amlodipine 5mg, ECG, follow-up 48h.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="proj-badge badge-purple">🏥 GenAI · Healthcare AI · Bedrock</div>
+          <div class="proj-title">ClinicalScribe</div>
+          <div class="proj-subtitle">AI Clinical Documentation</div>
+          <p class="proj-desc">Converts patient encounter audio into structured SOAP notes using Amazon Bedrock and AWS MCP servers. Built with clinical UX standards and cost-safe feature flags for healthcare compliance.</p>
+          <div class="card-tags">
+            <div class="proj-tags">
+              <span class="proj-tag">Amazon Bedrock</span>
+              <span class="proj-tag">AWS Transcribe</span>
+              <span class="proj-tag">MCP</span>
+              <span class="proj-tag">FastAPI</span>
+              <span class="proj-tag">S3</span>
+              <span class="proj-tag">Terraform</span>
+            </div>
+            <div class="proj-links">
+              <a href="https://github.com/UwaisMansuri22/ClinicalScribe" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      const message = (input.value || "").trim();
-      if (!message) return;
+      <!-- 3. Portfolio Website -->
+      <div class="project-card small glow-cyan fade-up" style="transition-delay:0.1s">
+        <div class="card-mockup">
+          <svg width="100%" height="220" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              @keyframes echo-appear { 0%,55%{opacity:0;transform:translateY(8px)} 68%,95%{opacity:1;transform:translateY(0)} 100%{opacity:0} }
+              #echo-bubble { animation: echo-appear 4s ease infinite; transform-box: fill-box; transform-origin: center bottom; }
+            </style>
+            <!-- Browser chrome -->
+            <rect x="0" y="0" width="420" height="28" fill="#0A1628"/>
+            <circle cx="14" cy="14" r="5" fill="#FF5F57"/>
+            <circle cx="28" cy="14" r="5" fill="#FFBD2E"/>
+            <circle cx="42" cy="14" r="5" fill="#28CA41"/>
+            <rect x="60" y="7" width="280" height="14" rx="7" fill="#1A2B45"/>
+            <text x="200" y="18" text-anchor="middle" font-size="9" fill="#4A5568" font-family="monospace">uwaismansuri.com</text>
+            <!-- Page background -->
+            <rect x="0" y="28" width="420" height="192" fill="#050A14"/>
+            <!-- Constellation dots -->
+            <circle cx="50" cy="75" r="1.5" fill="#00D4FF" opacity="0.6"/>
+            <circle cx="130" cy="55" r="1" fill="#00D4FF" opacity="0.4"/>
+            <circle cx="200" cy="85" r="2" fill="#00D4FF" opacity="0.7"/>
+            <circle cx="310" cy="65" r="1.5" fill="#00D4FF" opacity="0.5"/>
+            <circle cx="375" cy="95" r="1" fill="#00D4FF" opacity="0.4"/>
+            <circle cx="80" cy="145" r="1" fill="#00D4FF" opacity="0.3"/>
+            <circle cx="260" cy="155" r="1.5" fill="#00D4FF" opacity="0.5"/>
+            <circle cx="340" cy="130" r="1" fill="#00D4FF" opacity="0.3"/>
+            <!-- Constellation lines -->
+            <line x1="50" y1="75" x2="130" y2="55" stroke="#00D4FF" stroke-width="0.5" opacity="0.2"/>
+            <line x1="130" y1="55" x2="200" y2="85" stroke="#00D4FF" stroke-width="0.5" opacity="0.2"/>
+            <line x1="200" y1="85" x2="310" y2="65" stroke="#00D4FF" stroke-width="0.5" opacity="0.2"/>
+            <line x1="310" y1="65" x2="375" y2="95" stroke="#00D4FF" stroke-width="0.5" opacity="0.15"/>
+            <!-- Name text -->
+            <text x="210" y="125" text-anchor="middle" font-size="24" font-weight="700" fill="white" font-family="Inter, sans-serif">Uwais</text>
+            <text x="210" y="152" text-anchor="middle" font-size="24" font-weight="700" fill="#00D4FF" font-family="Inter, sans-serif">Mansuri</text>
+            <!-- Echo chat bubble -->
+            <g id="echo-bubble" opacity="0">
+              <rect x="105" y="166" width="210" height="36" rx="8" fill="#0F1F3D" stroke="#1A2B45" stroke-width="1"/>
+              <circle cx="121" cy="184" r="8" fill="#00D4FF"/>
+              <text x="121" y="188" text-anchor="middle" font-size="8" fill="#050A14" font-weight="700">E</text>
+              <text x="138" y="180" font-size="8" fill="#8892A4" font-family="Inter, sans-serif">Hi! I'm Echo. Ask me</text>
+              <text x="138" y="192" font-size="8" fill="#8892A4" font-family="Inter, sans-serif">anything about Uwais...</text>
+            </g>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="proj-badge badge-cyan">Cloud + AI</div>
+          <div class="proj-title">Portfolio Website</div>
+          <div class="proj-subtitle">This Site</div>
+          <p class="proj-desc">Hosted on AWS S3 + CloudFront with Route 53 DNS. Features Echo, an AI assistant powered by Amazon Bedrock Claude via Lambda and API Gateway.</p>
+          <div class="card-tags">
+            <div class="proj-tags">
+              <span class="proj-tag">S3</span>
+              <span class="proj-tag">CloudFront</span>
+              <span class="proj-tag">Lambda</span>
+              <span class="proj-tag">Bedrock</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      input.value = "";
-      appendUserMessage(body, message);
+      <!-- 4. Serverless ETL Pipeline -->
+      <div class="project-card small glow-cyan fade-up" style="transition-delay:0.15s">
+        <div class="card-mockup">
+          <svg width="100%" height="220" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="etl-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#0F1F3D" stroke-width="0.5"/>
+              </pattern>
+              <path id="etl-path" d="M 80 110 L 340 110"/>
+            </defs>
+            <rect width="420" height="220" fill="#050A14"/>
+            <rect width="420" height="220" fill="url(#etl-grid)"/>
+            <!-- Title bar -->
+            <rect x="0" y="0" width="420" height="28" fill="#0A1628"/>
+            <circle cx="14" cy="14" r="5" fill="#FF5F57"/>
+            <circle cx="28" cy="14" r="5" fill="#FFBD2E"/>
+            <circle cx="42" cy="14" r="5" fill="#28CA41"/>
+            <text x="210" y="18" text-anchor="middle" font-size="9" fill="#4A5568" font-family="monospace">etl-pipeline — running</text>
+            <!-- S3 node -->
+            <rect x="20" y="86" width="110" height="48" rx="8" fill="#0F1F3D" stroke="#1A2B45"/>
+            <text x="75" y="107" text-anchor="middle" font-size="11" fill="#00D4FF" font-family="monospace" font-weight="600">S3</text>
+            <text x="75" y="122" text-anchor="middle" font-size="8" fill="#4A5568" font-family="Inter, sans-serif">Raw Data</text>
+            <!-- Arrow S3→Lambda -->
+            <line x1="130" y1="110" x2="164" y2="110" stroke="#00D4FF" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <polygon points="164,106 172,110 164,114" fill="#00D4FF"/>
+            <!-- Lambda node -->
+            <rect x="172" y="86" width="110" height="48" rx="8" fill="#0F1F3D" stroke="#1A2B45"/>
+            <text x="227" y="107" text-anchor="middle" font-size="11" fill="#00FF88" font-family="monospace" font-weight="600">Lambda</text>
+            <text x="227" y="122" text-anchor="middle" font-size="8" fill="#4A5568" font-family="Inter, sans-serif">Transform</text>
+            <!-- Arrow Lambda→RDS -->
+            <line x1="282" y1="110" x2="316" y2="110" stroke="#00D4FF" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <polygon points="316,106 324,110 316,114" fill="#00D4FF"/>
+            <!-- RDS node -->
+            <rect x="324" y="86" width="80" height="48" rx="8" fill="#0F1F3D" stroke="#1A2B45"/>
+            <text x="364" y="107" text-anchor="middle" font-size="11" fill="#FFB800" font-family="monospace" font-weight="600">RDS</text>
+            <text x="364" y="122" text-anchor="middle" font-size="8" fill="#4A5568" font-family="Inter, sans-serif">Store</text>
+            <!-- Animated flow dots -->
+            <circle r="5" fill="#00D4FF">
+              <animateMotion dur="2s" repeatCount="indefinite" begin="0s" calcMode="linear"><mpath href="#etl-path"/></animateMotion>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.92;1" dur="2s" repeatCount="indefinite" begin="0s"/>
+            </circle>
+            <circle r="5" fill="#00D4FF">
+              <animateMotion dur="2s" repeatCount="indefinite" begin="0.7s" calcMode="linear"><mpath href="#etl-path"/></animateMotion>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.92;1" dur="2s" repeatCount="indefinite" begin="0.7s"/>
+            </circle>
+            <circle r="5" fill="#00D4FF">
+              <animateMotion dur="2s" repeatCount="indefinite" begin="1.4s" calcMode="linear"><mpath href="#etl-path"/></animateMotion>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.92;1" dur="2s" repeatCount="indefinite" begin="1.4s"/>
+            </circle>
+            <!-- Label -->
+            <text x="210" y="185" text-anchor="middle" font-size="9" fill="#4A5568" font-family="Inter, sans-serif">Orchestrated by Step Functions</text>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="proj-badge badge-cyan">Cloud Architecture</div>
+          <div class="proj-title">Serverless ETL Pipeline</div>
+          <div class="proj-subtitle">Data Engineering</div>
+          <p class="proj-desc">Automated data ingestion, transformation, and storage using Lambda, S3, RDS, and Step Functions with Parquet archiving for analytics.</p>
+          <div class="card-tags">
+            <div class="proj-tags">
+              <span class="proj-tag">Lambda</span>
+              <span class="proj-tag">S3</span>
+              <span class="proj-tag">RDS</span>
+              <span class="proj-tag">Step Functions</span>
+            </div>
+            <div class="proj-links">
+              <a href="https://medium.com/@uwais22/building-a-scalable-serverless-etl-pipeline-with-aws-c0222b4ff0a5" target="_blank" rel="noreferrer" class="proj-link gh">↗ Medium</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      // Load + update history
-      const history = loadHistory();
-      history.push({ role: "user", content: message });
-      saveHistory(history);
+      <!-- 5. Skin Disease Detection CNN -->
+      <div class="project-card small glow-purple fade-up" style="transition-delay:0.2s">
+        <div class="card-mockup">
+          <svg width="100%" height="220" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <style>
+                @keyframes cnn-scan { 0%,100%{transform:translateY(0)} 50%{transform:translateY(100px)} }
+                @keyframes cnn-result { 0%,65%{opacity:0} 78%,100%{opacity:1} }
+                .cnn-scan-line { animation: cnn-scan 2.5s ease-in-out infinite; transform-box: fill-box; transform-origin: top center; }
+                .cnn-result-el { animation: cnn-result 2.5s ease infinite; }
+              </style>
+            </defs>
+            <rect width="420" height="220" fill="#050A14"/>
+            <!-- Title bar -->
+            <rect x="0" y="0" width="420" height="28" fill="#0A1628"/>
+            <circle cx="14" cy="14" r="5" fill="#FF5F57"/>
+            <circle cx="28" cy="14" r="5" fill="#FFBD2E"/>
+            <circle cx="42" cy="14" r="5" fill="#28CA41"/>
+            <text x="210" y="18" text-anchor="middle" font-size="9" fill="#4A5568" font-family="monospace">cnn-classifier — analyzing</text>
+            <!-- Medical image placeholder -->
+            <rect x="16" y="36" width="120" height="148" rx="8" fill="#0F1F3D" stroke="#2B1A45"/>
+            <line x1="36" y1="56" x2="116" y2="56" stroke="#1A2B45" stroke-width="0.5"/>
+            <line x1="36" y1="76" x2="116" y2="76" stroke="#1A2B45" stroke-width="0.5"/>
+            <line x1="36" y1="96" x2="116" y2="96" stroke="#1A2B45" stroke-width="0.5"/>
+            <line x1="36" y1="116" x2="116" y2="116" stroke="#1A2B45" stroke-width="0.5"/>
+            <line x1="36" y1="136" x2="116" y2="136" stroke="#1A2B45" stroke-width="0.5"/>
+            <line x1="36" y1="156" x2="116" y2="156" stroke="#1A2B45" stroke-width="0.5"/>
+            <text x="76" y="108" text-anchor="middle" font-size="9" fill="#4A5568" font-family="Inter, sans-serif">Medical</text>
+            <text x="76" y="121" text-anchor="middle" font-size="9" fill="#4A5568" font-family="Inter, sans-serif">Image</text>
+            <!-- Animated scan line -->
+            <rect class="cnn-scan-line" x="16" y="36" width="120" height="3" rx="1" fill="#7C3AED" opacity="0.9"/>
+            <!-- CNN layers -->
+            <rect x="168" y="42" width="18" height="120" rx="3" fill="#0F1F3D" stroke="#2B1A45"/>
+            <rect x="194" y="56" width="16" height="92" rx="3" fill="#0F1F3D" stroke="#2B1A45"/>
+            <rect x="218" y="68" width="14" height="68" rx="3" fill="#0F1F3D" stroke="#2B1A45"/>
+            <rect x="240" y="80" width="12" height="44" rx="3" fill="#0F1F3D" stroke="#2B1A45"/>
+            <text x="204" y="196" text-anchor="middle" font-size="8" fill="#4A5568" font-family="Inter, sans-serif">CNN Layers</text>
+            <!-- Input arrow -->
+            <line x1="136" y1="110" x2="166" y2="110" stroke="#7C3AED" stroke-width="1.5"/>
+            <polygon points="166,106 174,110 166,114" fill="#7C3AED"/>
+            <!-- Output arrow -->
+            <line x1="254" y1="110" x2="278" y2="110" stroke="#7C3AED" stroke-width="1.5"/>
+            <polygon points="278,106 286,110 278,114" fill="#7C3AED"/>
+            <!-- Result box -->
+            <rect x="286" y="74" width="118" height="72" rx="8" fill="#0F1F3D" stroke="#7C3AED"/>
+            <text class="cnn-result-el" x="345" y="96" text-anchor="middle" font-size="9" fill="#00FF88" font-family="monospace" font-weight="600">Classified</text>
+            <text class="cnn-result-el" x="345" y="111" text-anchor="middle" font-size="8" fill="#F0F4FF" font-family="Inter, sans-serif">Melanocytic</text>
+            <text class="cnn-result-el" x="345" y="124" text-anchor="middle" font-size="8" fill="#F0F4FF" font-family="Inter, sans-serif">Nevus</text>
+            <rect class="cnn-result-el" x="305" y="131" width="80" height="5" rx="2" fill="#1A2B45"/>
+            <rect class="cnn-result-el" x="305" y="131" width="67" height="5" rx="2" fill="#00FF88"/>
+            <text class="cnn-result-el" x="345" y="148" text-anchor="middle" font-size="7" fill="#4A5568" font-family="Inter, sans-serif">84% confidence</text>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="proj-badge badge-purple">Healthcare AI</div>
+          <div class="proj-title">Skin Disease Detection CNN</div>
+          <div class="proj-subtitle">Computer Vision</div>
+          <p class="proj-desc">CNN-based medical image classifier for dermatological conditions. Built with TensorFlow and Keras with a full image preprocessing pipeline.</p>
+          <div class="card-tags">
+            <div class="proj-tags">
+              <span class="proj-tag">TensorFlow</span>
+              <span class="proj-tag">Keras</span>
+              <span class="proj-tag">Python</span>
+            </div>
+            <div class="proj-links">
+              <a href="https://github.com/UwaisMansuri22/Skin-Disease-Detection-Using-CNN" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      appendBotMessage(body, "Thinking…");
+    </div>
+  </div>
+  <div class="scroll-hint fade-up" style="transition-delay:0.25s">← scroll →</div>
+</section>
 
-      try {
-        const res = await fetch(window.CHATBOT_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: message,
-            history: history
-          })
-        });
+<!-- ECHO AI -->
+<section id="echo">
+  <div class="container">
+    <div class="fade-up" style="text-align:center">
+      <span class="section-label">AI Assistant</span>
+      <h2 class="section-title">Ask Echo anything about Uwais</h2>
+      <p style="color:var(--text-secondary);max-width:520px;margin:0 auto;">Powered by Amazon Bedrock · Claude. Ask about projects, experience, or open roles.</p>
+    </div>
+    <div class="echo-container fade-up" style="transition-delay:0.1s">
+      <div class="echo-header">
+        <div class="echo-avatar">E</div>
+        <div class="echo-header-text">
+          <h3>Echo</h3>
+          <p>Uwais's AI portfolio assistant</p>
+        </div>
+        <div class="echo-powered">◆ <span>Amazon Bedrock</span> · Claude</div>
+      </div>
+      <div class="echo-pills">
+        <button class="echo-pill" data-q="What is AlarmBrain?">What is AlarmBrain?</button>
+        <button class="echo-pill" data-q="What's Uwais's experience?">What's Uwais's experience?</button>
+        <button class="echo-pill" data-q="Does he need H1B sponsorship?">Does he need H1B sponsorship?</button>
+        <button class="echo-pill" data-q="What roles is he open to?">What roles is he open to?</button>
+        <button class="echo-pill" data-q="Tell me about ClinicalScribe">Tell me about ClinicalScribe</button>
+      </div>
+      <div class="echo-messages" id="echo-messages">
+        <div class="echo-msg bot">
+          <div class="echo-msg-avatar bot">E</div>
+          <div class="echo-bubble">Hi! I'm Echo, Uwais's AI assistant. Ask me about his projects, experience, skills, or anything else you'd like to know.</div>
+        </div>
+      </div>
+      <div class="echo-input-row">
+        <input class="echo-input" id="echo-input" type="text" placeholder="Ask Echo something..." autocomplete="off">
+        <button class="echo-send" id="echo-send">Send →</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const data = await res.json();
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label">Experience</span>
+      <h2 class="section-title">Where I've worked.</h2>
+    </div>
+    <div class="timeline">
 
-        // Normalize response:
-        let reply = "";
-        if (data && data.reply) {
-          reply = data.reply;
-        } else if (data && typeof data.body === "string") {
-          try {
-            const inner = JSON.parse(data.body);
-            reply = inner.reply || inner.answer || inner.message || "";
-          } catch (_) {
-            reply = data.body;
-          }
-        } else {
-          reply = data.answer || data.message || JSON.stringify(data);
-        }
-
-        if (!reply) reply = "No response received. Please try again.";
-
-        appendBotMessage(body, reply);
-
-        // Save assistant reply in history
-        const updated = loadHistory();
-        updated.push({ role: "assistant", content: reply });
-        saveHistory(updated);
-
-      } catch (error) {
-        console.error("Chat error:", error);
-        appendBotMessage(body, "Sorry — chat failed. Please try again.");
-      }
-    }
-
-    // Quick buttons helper
-    function quickAsk(text) {
-      const input = document.getElementById("message-text");
-      input.value = text;
-      askChat();
-    }
-
-    // Send on Enter
-    document.addEventListener("DOMContentLoaded", function () {
-      const input = document.getElementById("message-text");
-      if (input) {
-        input.addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            askChat();
-          }
-        });
-      }
-
-      const btn = document.getElementById('generate-pack-btn');
-      if (btn) btn.addEventListener('click', generateRecruiterPack);
-    });
-
-    // ==========================
-    // Recruiter One-Click Pack
-    // ==========================
-    function setRecruiterPackStatus(msg, isError) {
-      const el = document.getElementById('generate-pack-status');
-      if (!el) return;
-      el.style.display = 'block';
-      el.style.color = isError ? '#dc3545' : '';
-      el.textContent = msg;
-    }
-
-    async function generateRecruiterPack() {
-      const apiUrl = window.RECRUITER_PACK_API_URL;
-      if (!apiUrl || apiUrl.indexOf('REPLACE_ME') !== -1) {
-        setRecruiterPackStatus('Recruiter Pack API is not configured yet. Update window.RECRUITER_PACK_API_URL in index.html.', true);
-        return;
-      }
-
-      const btn = document.getElementById('generate-pack-btn');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Generating…';
-      }
-      setRecruiterPackStatus('Generating PDF…', false);
-
-      try {
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: 'generic' })
-        });
-
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error('Request failed: ' + res.status + ' ' + text);
-        }
-
-        const data = await res.json();
-
-        // Support both shapes:
-        // 1) Direct JSON: { downloadUrl: "..." }
-        // 2) Lambda proxy: { statusCode, headers, body: "{\"downloadUrl\":\"...\"}" }
-        let downloadUrl = data && data.downloadUrl;
-        if (!downloadUrl && data && typeof data.body === 'string') {
-          try {
-            const parsedBody = JSON.parse(data.body);
-            downloadUrl = parsedBody && parsedBody.downloadUrl;
-          } catch (_) { }
-        }
-
-        if (!downloadUrl) throw new Error('API response missing downloadUrl');
-
-        setRecruiterPackStatus('Download starting…', false);
-        window.location.href = downloadUrl;
-
-      } catch (e) {
-        setRecruiterPackStatus('Failed to generate pack: ' + (e && e.message ? e.message : e), true);
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = 'Generate 1-Page Recruiter Pack (PDF)';
-        }
-      }
-    }
-  </script>
-
-  <!-- Header Section -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1 class="sitename"></h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="resume.html">Resume</a></li>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="contact.html">Contact</a></li>
+      <!-- Role 1 -->
+      <div class="tl-entry fade-up" style="transition-delay:0.1s">
+        <div class="tl-accent-bar"></div>
+        <div class="tl-header">
+          <div class="tl-header-left">
+            <div class="tl-period">Jan 2023 – Present</div>
+            <div class="tl-title">Cloud Platform &amp; Reliability Engineer</div>
+            <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare · Bloomfield, CT</span></div>
+          </div>
+          <span class="tl-badge">Current</span>
+        </div>
+        <div class="tl-chips">
+          <span class="tl-chip">EC2</span>
+          <span class="tl-chip">EKS</span>
+          <span class="tl-chip">Lambda</span>
+          <span class="tl-chip">RDS</span>
+          <span class="tl-chip">DynamoDB</span>
+          <span class="tl-chip">SQS / SNS</span>
+          <span class="tl-chip">API Gateway</span>
+          <span class="tl-chip">ALB / NLB</span>
+          <span class="tl-chip">CloudWatch</span>
+          <span class="tl-chip">Grafana</span>
+          <span class="tl-chip">Dynatrace</span>
+          <span class="tl-chip">Splunk</span>
+          <span class="tl-chip">ServiceNow</span>
+          <span class="tl-chip">Terraform</span>
+        </div>
+        <div class="tl-divider"></div>
+        <ul class="tl-items">
+          <li class="tl-item">Operated production AWS infrastructure for Cigna's insurance and pharmacy platforms — Lambda, EC2, RDS, SQS, API Gateway — supporting high-volume healthcare transactions.</li>
+          <li class="tl-item">Managed 12–15 P2–P4 incidents per month; performed RCA across compute, storage, and networking, reducing MTTR by 25–30% through structured runbook development.</li>
+          <li class="tl-item">Resolved a critical EC2 Auto Scaling failure where instances stopped registering with ALB target groups, restoring traffic routing before SLA breach.</li>
+          <li class="tl-item">Built 3 Grafana dashboards (10+ panels each) and implemented Dynatrace APM and synthetic monitoring across API endpoints and scheduled health checks.</li>
+          <li class="tl-item">Authored runbooks, SOPs, and RCA documentation; acted as incident resolver and war-room participant for high-severity events via ServiceNow and Splunk.</li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="hero" class="hero section dark-background">
-    <img src="assets/img/hero-bg.jpg" alt="Hero Background" data-aos="fade-in">
-    <div class="container" data-aos="zoom-out" data-aos-delay="100">
-      <h2>Uwais Mansuri</h2>
-      <p>I'm <span class="typed" data-typed-items="Cloud Engineer, Data Scientist, Problem Solver">Cloud Engineer</span>
-        <span class="typed-cursor typed-cursor--blink"></span>
-      </p>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/uwais-mansuri" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
-        <a href="https://github.com/UwaisMansuri22" target="_blank" rel="noopener"><i class="bi bi-github"></i></a>
-        <a href="https://medium.com/@uwais22" target="_blank" rel="noopener"><i class="bi bi-medium"></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Career Snapshot Section -->
-  <section id="recruiter-pack" class="recruiter-pack section">
-    <div class="container" data-aos="fade-up">
-      <div class="section-title">
-        <h2>Career Snapshot</h2>
-        <p>A focused one-page overview of my cloud, platform, and production engineering work.</p>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <button id="generate-pack-btn" class="btn btn-primary" type="button">
-            Download Snapshot (PDF)
-          </button>
-          <p id="generate-pack-status" style="margin-top:10px; display:none;"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer Section -->
-  <footer id="footer" class="footer dark-background">
-    <div class="container">
-      <h3 class="sitename"></h3>
-      <p>Crafting solutions to modern challenges while blending data science and cloud engineering expertise.</p>
-      <div class="container">
-        <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Uwais Mansuri</strong> <span>All Rights Reserved</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scroll Top / Chat Toggle -->
-  <a id="chat-toggle" class="chat-toggle d-flex align-items-center justify-content-center active" role="button"
-    aria-label="Open chat" onclick="showChat()">
-    <img src="assets/tags/chat-bubble.png" alt="Chat" style="width: 24px; height: 24px;">
-  </a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Chat Box -->
-  <div class="chat-overlay hide-element" id="chat-box">
-    <div class="container py-2">
-      <div class="row d-flex">
-        <div class="col-md-12 col-lg-12 col-xl-12">
-          <div class="card" style="background-color: #424242; border-radius: 12px;">
-            <div class="card-header d-flex justify-content-between align-items-center p-3"
-              style="border-top: 4px solid #ff6a1c; border-bottom: 1px solid grey;">
-              <div>
-                <h5 class="mb-0 text-white">Ask AI about Uwais</h5>
-                <div class="quick-btns">
-                  <button class="btn btn-sm btn-light" type="button" onclick="quickAsk('Summarize your SRE experience')">SRE Summary</button>
-                  <button class="btn btn-sm btn-light" type="button" onclick="quickAsk('What AWS services have you worked with?')">AWS Stack</button>
-                  <button class="btn btn-sm btn-light" type="button" onclick="quickAsk('Give 3 production-impact highlights')">Impact</button>
-                  <button class="btn btn-sm btn-outline-light" type="button" onclick="clearHistory()">Clear</button>
-                </div>
-              </div>
-
-              <div class="d-flex flex-row align-items-center">
-                <i class="bi bi-dash-lg me-3 text-white" onclick="hideChat()" style="cursor: pointer;"></i>
-              </div>
-            </div>
-
-            <div class="card-body" id="chat-body" style="position: relative; height: 400px; overflow-y: scroll;">
-              <!-- messages render here -->
-            </div>
-
-            <div class="card-footer d-flex justify-content-start align-items-center p-3"
-              style="border-top: 1px solid grey;">
-              <div class="input-group mb-0">
-                <input type="text" class="form-control" placeholder="Type your question..."
-                  aria-label="Message" aria-describedby="button-addon2" id="message-text" />
-                <button class="btn btn-warning text-white" type="button" id="button-addon2"
-                  style="padding-top: .55rem; background-color: #ff6a1c;" onclick="askChat()">Send</button>
-              </div>
-            </div>
-
+      <!-- Role 2 -->
+      <div class="tl-entry tl-purple fade-up" style="transition-delay:0.2s">
+        <div class="tl-accent-bar purple"></div>
+        <div class="tl-header">
+          <div class="tl-header-left">
+            <div class="tl-period purple">Feb 2022 – Dec 2022</div>
+            <div class="tl-title">Python API Developer</div>
+            <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare · Bloomfield, CT</span></div>
           </div>
+        </div>
+        <div class="tl-chips">
+          <span class="tl-chip">Python</span>
+          <span class="tl-chip">Lambda</span>
+          <span class="tl-chip">API Gateway</span>
+          <span class="tl-chip">OAuth 2.0</span>
+          <span class="tl-chip">Okta</span>
+          <span class="tl-chip">Terraform</span>
+          <span class="tl-chip">Postman</span>
+          <span class="tl-chip">VPC</span>
+          <span class="tl-chip">IAM</span>
+        </div>
+        <div class="tl-divider"></div>
+        <ul class="tl-items">
+          <li class="tl-item">Developed Python-based APIs using AWS Lambda and API Gateway for secure, scalable communication between distributed healthcare systems.</li>
+          <li class="tl-item">Implemented OAuth 2.0 with Okta and Lambda Authorizers to enforce access control and meet compliance requirements.</li>
+          <li class="tl-item">Automated infrastructure and deployment workflows using Terraform and Python, cutting manual steps across release cycles.</li>
+          <li class="tl-item">Debugged and validated API integrations using Postman, reducing integration failures and improving cross-team release confidence.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label">Capabilities</span>
+      <h2 class="section-title">Tech Stack</h2>
+    </div>
+    <div class="stack-grid fade-up" style="transition-delay:0.1s">
+      <div class="stack-cluster">
+        <div class="cluster-header">
+          <span class="cluster-icon">☁</span>
+          <span class="cluster-title">Cloud &amp; Infrastructure</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag" data-proof="AlarmBrain">Lambda</span>
+          <span class="skill-tag">EC2</span>
+          <span class="skill-tag" data-proof="AlarmBrain">RDS</span>
+          <span class="skill-tag" data-proof="AlarmBrain">S3</span>
+          <span class="skill-tag" data-proof="AlarmBrain">API Gateway</span>
+          <span class="skill-tag" data-proof="AlarmBrain">SQS</span>
+          <span class="skill-tag">DynamoDB</span>
+          <span class="skill-tag" data-proof="AlarmBrain">SNS</span>
+          <span class="skill-tag" data-proof="AlarmBrain">CloudWatch</span>
+          <span class="skill-tag">IAM</span>
+          <span class="skill-tag">VPC</span>
+          <span class="skill-tag">Route 53</span>
+          <span class="skill-tag">CloudFront</span>
+          <span class="skill-tag">ECS</span>
+          <span class="skill-tag">Kinesis</span>
+          <span class="skill-tag">Secrets Manager</span>
+        </div>
+      </div>
+      <div class="stack-cluster">
+        <div class="cluster-header">
+          <span class="cluster-icon">🤖</span>
+          <span class="cluster-title">AI &amp; GenAI</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag" data-proof="ClinicalScribe">Amazon Bedrock</span>
+          <span class="skill-tag" data-proof="AlarmBrain">Claude API</span>
+          <span class="skill-tag" data-proof="AlarmBrain">Prompt Engineering</span>
+          <span class="skill-tag" data-proof="ClinicalScribe">MCP Servers</span>
+          <span class="skill-tag" data-proof="ClinicalScribe">AWS Transcribe</span>
+          <span class="skill-tag">LLM Integration</span>
+        </div>
+      </div>
+      <div class="stack-cluster">
+        <div class="cluster-header">
+          <span class="cluster-icon">👁</span>
+          <span class="cluster-title">Observability</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Grafana</span>
+          <span class="skill-tag">Dynatrace APM</span>
+          <span class="skill-tag">Dynatrace Synthetics</span>
+          <span class="skill-tag">Splunk</span>
+          <span class="skill-tag" data-proof="AlarmBrain">CloudWatch</span>
+          <span class="skill-tag">ServiceNow</span>
+          <span class="skill-tag">X-Ray</span>
+        </div>
+      </div>
+      <div class="stack-cluster">
+        <div class="cluster-header">
+          <span class="cluster-icon">⚙</span>
+          <span class="cluster-title">IaC &amp; DevOps</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag" data-proof="AlarmBrain">Terraform</span>
+          <span class="skill-tag">CloudFormation</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="stack-cluster stack-langs">
+        <div class="cluster-header">
+          <span class="cluster-icon">&lt;/&gt;</span>
+          <span class="cluster-title">Languages &amp; Frameworks</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag" data-proof="AlarmBrain">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag" data-proof="AlarmBrain">FastAPI</span>
+          <span class="skill-tag">Pydantic</span>
+          <span class="skill-tag">Boto3</span>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.css"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="container">
+    <div class="fade-up" style="text-align:center">
+      <span class="section-label">Credentials</span>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="certs-grid fade-up" style="transition-delay:0.1s">
+      <div class="cert-card">
+        <div class="cert-icon blue">☁</div>
+        <div class="cert-name">Microsoft Azure Fundamentals</div>
+        <div class="cert-issuer">Microsoft · AZ-900</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon orange">⚡</div>
+        <div class="cert-name">AWS Certified Developer Associate</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon orange">☁</div>
+        <div class="cert-name">AWS Certified Cloud Practitioner</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon purple">🤖</div>
+        <div class="cert-name">AWS Partner: Generative AI Essentials</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label">Let's Connect</span>
+      <h2 class="section-title">Get in Touch</h2>
+    </div>
+    <div class="contact-grid fade-up" style="transition-delay:0.1s">
+      <div class="contact-info">
+        <h3>Open to new opportunities.</h3>
+        <p>Targeting Senior Cloud Engineer, SRE, and AI Platform Engineer roles where I can bring both deep AWS expertise and hands-on GenAI experience.</p>
+        <!-- <div class="h1b-notice">⚠ H1B visa sponsorship required</div> -->
+        <div class="contact-links">
+          <a href="https://linkedin.com/in/uwais-mansuri" target="_blank" rel="noreferrer" class="contact-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn ↗
+          </a>
+          <a href="https://github.com/UwaisMansuri22" target="_blank" rel="noreferrer" class="contact-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub ↗
+          </a>
+          <a href="mailto:uwais22@gmail.com" class="contact-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            uwais22@gmail.com
+          </a>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label class="form-label" for="cf-name">Name</label>
+            <input class="form-input" id="cf-name" type="text" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cf-email">Email</label>
+            <input class="form-input" id="cf-email" type="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cf-msg">Message</label>
+            <textarea class="form-textarea" id="cf-msg" placeholder="Tell me about the role or opportunity..." required></textarea>
+          </div>
+          <button class="form-submit" type="submit" id="form-submit">Send Message →</button>
+          <div class="form-status" id="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Uwais Mansuri</div>
+  <div class="footer-sub">Cloud Platform &amp; SRE Engineer · Manchester, CT<br>Hosted on AWS S3 + CloudFront · Powered by Amazon Bedrock</div>
+  <div class="footer-copy">© 2026 Uwais Mansuri · All rights reserved</div>
+</footer>
+
+<script>
+// ── THEME (Fix 8) ─────────────────────────────────────────────
+(function() {
+  const saved = localStorage.getItem('portfolio-theme') || 'dark';
+  const btn = document.getElementById('theme-toggle');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    if (btn) btn.textContent = '☾';
+  }
+  if (btn) btn.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
+    btn.textContent = isLight ? '☾' : '☀';
+  });
+})();
+
+// ── PARTICLES (Fix 9 + 10) ────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let pts = [], W, H, raf;
+  let mouseX = -9999, mouseY = -9999;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+  }, { passive: true });
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function init() {
+    resize();
+    pts = [];
+    const n = Math.min(60, Math.floor(W * H / 14000));
+    for (let i = 0; i < n; i++) {
+      const isStar = Math.random() < 0.15;
+      pts.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: 1.0 + Math.random() * 1.0,
+        opacity: 0.3 + Math.random() * 0.4,
+        currentOpacity: 0.3,
+        pulseSpeed:  0.02 + Math.random() * 0.02,
+        pulseOffset: Math.random() * Math.PI * 2,
+        pulseAmount: 0.5 + Math.random() * 0.5,
+        isStar,
+        twinkleSpeed: isStar ? 0.05 + Math.random() * 0.05 : 0,
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const now = Date.now();
+
+    for (const p of pts) {
+      // Base movement
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+
+      // Mouse attraction (Fix 9)
+      const dx = mouseX - p.x, dy = mouseY - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        p.x += dx * 0.02;
+        p.y += dy * 0.02;
+        p.currentOpacity = Math.min(0.9, p.opacity * 2.2);
+      } else {
+        p.currentOpacity = p.opacity;
+      }
+
+      // Pulse (Fix 9)
+      const pulse = 1 + Math.sin(now * p.pulseSpeed + p.pulseOffset) * 0.3 * p.pulseAmount;
+      const drawR = p.r * pulse;
+
+      // Star twinkle (Fix 9)
+      let opacity = p.currentOpacity;
+      if (p.isStar) opacity = 0.3 + Math.abs(Math.sin(now * p.twinkleSpeed)) * 0.6;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, drawR, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,212,255,${opacity})`;
+      ctx.fill();
+    }
+
+    // Connection lines (Fix 9 — distance 150, opacity 0.15)
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 150) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(0,212,255,${0.15 * (1 - d / 150)})`;
+          ctx.lineWidth = 0.6;
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  init();
+  draw();
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); init(); draw(); }, { passive: true });
+})();
+
+// ── TERMINAL ANIMATION ────────────────────────────────────────
+(function() {
+  const out = document.getElementById('terminal-output');
+  if (!out) return;
+  const lines = [
+    { text: '$ alarmbrain analyze --alarm quote-processor-throttles', cls: 't-prompt', pause: 40 },
+    { text: '', cls: '', pause: 180 },
+    { text: '✓ Classified: lambda_throttle', cls: 't-green', pause: 28 },
+    { text: '✓ Fetching domain context...', cls: 't-green', pause: 28 },
+    { text: '✓ Calling Claude API...', cls: 't-green', pause: 28 },
+    { text: '', cls: '', pause: 220 },
+    { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━', cls: 't-muted', pause: 18 },
+    { text: 'INCIDENT BRIEF  INC-8FBF611F', cls: 't-white', pause: 28 },
+    { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━', cls: 't-muted', pause: 18 },
+    { text: 'Severity    P2', cls: 't-white', pause: 28 },
+    { text: 'Cause       Lambda concurrency limit', cls: 't-white', pause: 28 },
+    { text: '            hit during peak load', cls: 't-muted', pause: 28 },
+    { text: 'Impact      Quote requests failing', cls: 't-white', pause: 28 },
+    { text: '            for insurance members', cls: 't-muted', pause: 28 },
+    { text: 'Action      Check SQS queue depth', cls: 't-white', pause: 28 },
+    { text: '            Increase concurrency', cls: 't-muted', pause: 28 },
+    { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━', cls: 't-muted', pause: 18 },
+    { text: '$ ', cls: 't-prompt', pause: 0 },
+  ];
+  let li = 0, ci = 0, el = null, cursor = null;
+  function removeCursor() { if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor); }
+  function addCursor(to) {
+    removeCursor();
+    cursor = document.createElement('span');
+    cursor.className = 'term-cursor';
+    to.appendChild(cursor);
+  }
+  function tick() {
+    if (li >= lines.length) {
+      setTimeout(restart, 3000); return;
+    }
+    const line = lines[li];
+    if (ci === 0) {
+      removeCursor();
+      el = document.createElement('span');
+      el.className = 'term-line ' + line.cls;
+      out.appendChild(el);
+    }
+    if (ci < line.text.length) {
+      el.textContent += line.text[ci];
+      addCursor(el);
+      ci++;
+      setTimeout(tick, line.pause + Math.random() * 15);
+    } else {
+      li++; ci = 0;
+      const delay = (line.text === '') ? 50 : 60;
+      setTimeout(tick, delay);
+    }
+  }
+  function restart() {
+    out.innerHTML = '';
+    li = 0; ci = 0; el = null; cursor = null;
+    tick();
+  }
+  tick();
+})();
+
+// ── SCROLL ANIMATIONS ─────────────────────────────────────────
+const fadeEls = document.querySelectorAll('.fade-up');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+fadeEls.forEach(el => io.observe(el));
+
+// ── NAV SCROLL ────────────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+  updateActiveNav();
+}, { passive: true });
+
+// ── ACTIVE NAV ────────────────────────────────────────────────
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+const sections = [...navAnchors].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function updateActiveNav() {
+  const y = window.scrollY + 120;
+  let active = null;
+  for (const s of sections) { if (s.offsetTop <= y) active = s; }
+  navAnchors.forEach(a => {
+    a.classList.toggle('active', active && a.getAttribute('href') === '#' + active.id);
+  });
+}
+
+// ── MOBILE NAV ────────────────────────────────────────────────
+const toggle = document.getElementById('nav-toggle');
+const mobileNav = document.getElementById('nav-mobile');
+const closeBtn = document.getElementById('nav-mobile-close');
+function closeMobile() { mobileNav.classList.remove('open'); toggle.classList.remove('open'); }
+toggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); toggle.classList.toggle('open'); });
+closeBtn.addEventListener('click', closeMobile);
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
+
+// ── ECHO CHAT ─────────────────────────────────────────────────
+const SESSION_ID = crypto.randomUUID();
+const ECHO_API = 'https://32xvqg8ob2.execute-api.us-east-1.amazonaws.com/default/ChatBot-Lambda';
+const msgBox = document.getElementById('echo-messages');
+const input  = document.getElementById('echo-input');
+const sendBtn= document.getElementById('echo-send');
+
+function parseMd(text) {
+  const lines = text.split('\n');
+  const out = [];
+  for (const line of lines) {
+    let l = line
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer" class="echo-link">$1</a>')
+      .replace(/^#{1,3} (.+)$/, '<span class="echo-heading">$1</span>')
+      .replace(/^[-*•] (.+)$/, '<span class="echo-li">$1</span>');
+    out.push(l);
+  }
+  return out.join('<br>');
+}
+
+function appendMsg(role, text, isHtml) {
+  const wrap = document.createElement('div');
+  wrap.className = 'echo-msg ' + role;
+  const av = document.createElement('div');
+  av.className = 'echo-msg-avatar ' + (role === 'bot' ? 'bot' : 'usr');
+  av.textContent = role === 'bot' ? 'E' : 'U';
+  const bubble = document.createElement('div');
+  bubble.className = 'echo-bubble';
+  if (isHtml) bubble.innerHTML = text; else bubble.textContent = text;
+  wrap.appendChild(av); wrap.appendChild(bubble);
+  msgBox.appendChild(wrap);
+  msgBox.scrollTop = msgBox.scrollHeight;
+  return wrap;
+}
+
+function showTyping() {
+  const wrap = appendMsg('bot', '<div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>', true);
+  return wrap;
+}
+
+async function sendMessage(text) {
+  if (!text.trim() || sendBtn.disabled) return;
+  appendMsg('user', text);
+  input.value = '';
+  sendBtn.disabled = true;
+  const typingEl = showTyping();
+  try {
+    const res = await fetch(ECHO_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, session_id: SESSION_ID })
+    });
+    const outer = await res.json();
+    const inner = JSON.parse(outer.body);
+    const reply = inner.response[0].content;
+    typingEl.remove();
+    appendMsg('bot', parseMd(reply), true);
+  } catch(e) {
+    typingEl.remove();
+    appendMsg('bot', "I'm having trouble connecting right now. Reach Uwais directly on LinkedIn.", false);
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+sendBtn.addEventListener('click', () => sendMessage(input.value));
+input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input.value); }});
+document.querySelectorAll('.echo-pill').forEach(p => p.addEventListener('click', () => sendMessage(p.dataset.q)));
+
+// ── CONTACT FORM ──────────────────────────────────────────────
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('form-submit');
+  const status = document.getElementById('form-status');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  status.textContent = ''; status.className = 'form-status';
+  try {
+    await fetch('https://p7imt7rqf5.execute-api.us-east-1.amazonaws.com/default/ContactFormHandler', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: document.getElementById('cf-name').value,
+        email: document.getElementById('cf-email').value,
+        message: document.getElementById('cf-msg').value
+      })
+    });
+    status.textContent = "✓ Message sent! I'll be in touch soon.";
+    status.className = 'form-status ok';
+    this.reset();
+  } catch(err) {
+    status.textContent = '✗ Something went wrong. Email me directly at uwais22@gmail.com';
+    status.className = 'form-status err';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Send Message →';
+  }
+});
+
+// ── PROJECTS CAROUSEL DRAG TO SCROLL ──────────────────────────
+(function() {
+  const wrapper = document.querySelector('.projects-carousel-wrapper');
+  if (!wrapper) return;
+  let isDown = false, startX, scrollLeft;
+  wrapper.addEventListener('mousedown', e => {
+    isDown = true;
+    wrapper.classList.add('grabbing');
+    startX = e.pageX - wrapper.offsetLeft;
+    scrollLeft = wrapper.scrollLeft;
+  });
+  wrapper.addEventListener('mouseleave', () => { isDown = false; wrapper.classList.remove('grabbing'); });
+  wrapper.addEventListener('mouseup', () => { isDown = false; wrapper.classList.remove('grabbing'); });
+  wrapper.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - wrapper.offsetLeft;
+    wrapper.scrollLeft = scrollLeft - (x - startX) * 2;
+  });
+})();
+
+// ── SMOOTH SCROLL ─────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
 </body>
-
 </html>
