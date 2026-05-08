@@ -269,7 +269,7 @@ section { padding: 6rem 0; }
   max-height: 480px;
 }
 .about-stats {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0.75rem;
   margin-top: 1rem;
 }
 .about-stat {
@@ -437,6 +437,11 @@ section { padding: 6rem 0; }
   border: 1px solid var(--border); color: var(--text-secondary);
 }
 .proj-link.gh:hover { border-color: var(--text-primary); color: var(--text-primary); }
+
+/* CloudArchitect AI card hover */
+.project-card.cloudarchitect-ai:hover {
+  box-shadow: 0 0 30px rgba(0,212,255,0.25); border-color: rgba(0,212,255,0.3);
+}
 
 /* AlarmBrain mockup */
 .ab-mockup {
@@ -824,28 +829,10 @@ section { padding: 6rem 0; }
 
 /* CERTIFICATIONS */
 #certs { background: var(--bg-base); }
-.certs-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1rem; margin-top: 3rem;
+.credly-grid {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 2rem; margin-top: 3rem;
 }
-.cert-card {
-  background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: 14px; padding: 1.75rem 1.25rem;
-  text-align: center;
-  transition: all 0.3s var(--ease);
-  display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
-}
-.cert-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
-.cert-icon {
-  width: 56px; height: 56px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
-}
-.cert-icon.blue  { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); }
-.cert-icon.orange{ background: rgba(234,88,12,0.15); border: 1px solid rgba(234,88,12,0.3); }
-.cert-icon.purple{ background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); }
-.cert-name { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
-.cert-issuer { font-size: 0.68rem; color: var(--text-muted); }
 
 /* CONTACT */
 #contact { background: var(--bg-surface); }
@@ -913,7 +900,6 @@ footer {
   .hero-inner { grid-template-columns: 1fr; }
   .terminal { display: none; }
   .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .certs-grid { grid-template-columns: repeat(2, 1fr); }
   .stack-grid { grid-template-columns: 1fr; }
   .projects-carousel { padding: 0 20px; }
 }
@@ -921,7 +907,6 @@ footer {
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
   section { padding: 4rem 0; }
-  .certs-grid { grid-template-columns: 1fr 1fr; }
   .hero h1 { font-size: 2.8rem; }
   .hero-btns { flex-direction: column; }
   .echo-pills { padding: 0.75rem 1rem; }
@@ -1022,7 +1007,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
 
 <!-- NAVIGATION -->
 <nav id="navbar">
-  <a href="#home" class="nav-brand"><img src="assets/img/Uwais.png" alt="Uwais Mansuri" class="nav-avatar">Uwais <span>Mansuri</span></a>
+  <a href="#home" class="nav-brand">Uwais <span>Mansuri</span></a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
@@ -1074,6 +1059,76 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
   </div>
 </section>
 
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label">About</span>
+      <h2 class="section-title">Who I am.</h2>
+    </div>
+    <div class="about-grid">
+
+      <!-- Left: photo + stats -->
+      <div class="about-photo-col fade-up" style="transition-delay:0.1s">
+        <img src="assets/img/Uwais.png" alt="Uwais Mansuri" class="about-photo">
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="about-stat-num">4+</div>
+            <div class="about-stat-label">Yrs Production</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">25%</div>
+            <div class="about-stat-label">MTTR Reduction</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">4</div>
+            <div class="about-stat-label">AWS Certifications</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">2</div>
+            <div class="about-stat-label">AI Tools Shipped</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: bio + education + interests -->
+      <div class="fade-up" style="transition-delay:0.15s">
+        <div class="about-bio">
+          <p class="about-lead">Cloud Platform &amp; SRE Engineer operating production AWS infrastructure for Cigna Healthcare — one of the largest US health insurers — via Tata Consultancy Services. I own incident response, observability, and platform reliability for healthcare insurance and pharmacy systems where downtime has real patient impact.</p>
+          <p>I pair deep cloud operations experience with a Master's in Data Science (GPA 3.9) to bridge the gap between raw infrastructure and intelligent systems. That combination drives the AI tooling I build on top of it — <strong>AlarmBrain</strong> and <strong>ClinicalScribe</strong> — both solving real problems I've lived in production.</p>
+          <p>I'm targeting <strong>Senior Cloud Engineer, SRE, and AI Platform Engineer</strong> roles where AWS depth meets modern GenAI. If you're building reliable, intelligent infrastructure at scale, let's talk.</p>
+        </div>
+
+        <!-- Education -->
+        <div class="about-edu">
+          <div class="about-edu-card">
+            <div class="about-edu-icon ms">🎓</div>
+            <div>
+              <div class="about-edu-degree">M.S. Data Science</div>
+              <div class="about-edu-school">Saint Peter's University · Jersey City, NJ</div>
+              <div class="about-edu-year">2021 · GPA 3.9</div>
+            </div>
+          </div>
+          <div class="about-edu-card">
+            <div class="about-edu-icon bs">🎓</div>
+            <div>
+              <div class="about-edu-degree">B.Tech Computer Engineering</div>
+              <div class="about-edu-school">Indus University · Gujarat, India</div>
+              <div class="about-edu-year">2018</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-cta" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:28px;">
+          <a href="#projects" class="btn btn-primary">View Projects →</a>
+          <a href="assets/Uwais-Mansuri-Resume.pdf" class="btn btn-outline" target="_blank">Download Resume ↓</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FEATURED PROJECTS -->
 <section id="projects">
   <div class="container">
@@ -1084,6 +1139,116 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
   </div>
   <div class="projects-carousel-wrapper">
     <div class="projects-carousel">
+
+      <!-- 0. CloudArchitect AI -->
+      <div class="project-card featured cloudarchitect-ai fade-up">
+        <div class="card-mockup" style="height:220px">
+          <svg width="100%" height="220" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="ca-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#0F1F3D" stroke-width="0.5"/>
+              </pattern>
+              <path id="ca-path" d="M 30 79 L 390 79"/>
+            </defs>
+            <rect width="420" height="220" fill="#050A14"/>
+            <rect width="420" height="220" fill="url(#ca-grid)"/>
+            <!-- Chrome bar -->
+            <rect x="0" y="0" width="420" height="28" fill="#0A1628"/>
+            <circle cx="14" cy="14" r="5" fill="#FF5F57"/>
+            <circle cx="28" cy="14" r="5" fill="#FFBD2E"/>
+            <circle cx="42" cy="14" r="5" fill="#28CA41"/>
+            <text x="210" y="18" text-anchor="middle" font-size="9" fill="#4A5568" font-family="monospace">cloudarchitect-ai — workspace</text>
+            <!-- Prompt bar -->
+            <rect x="10" y="31" width="400" height="20" rx="4" fill="#0A1628" stroke="#1A2B45"/>
+            <text x="18" y="44" font-size="7.5" fill="#00D4FF" font-family="monospace">$ generate: "e-commerce checkout · 10k RPS · HIPAA"</text>
+            <!-- Node 1: Req -->
+            <rect x="30" y="58" width="50" height="42" rx="6" fill="#0F1F3D" stroke="#00D4FF" stroke-width="1"/>
+            <text x="55" y="75" text-anchor="middle" font-size="7.5" fill="#00D4FF" font-family="monospace" font-weight="600">Req</text>
+            <text x="55" y="87" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Analyze</text>
+            <text x="55" y="96" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Needs</text>
+            <!-- Arrow 1 -->
+            <line x1="80" y1="79" x2="86" y2="79" stroke="#4A5568" stroke-width="1.5"/>
+            <polygon points="86,76 92,79 86,82" fill="#4A5568"/>
+            <!-- Node 2: Arch -->
+            <rect x="92" y="58" width="50" height="42" rx="6" fill="#0F1F3D" stroke="#00FF88" stroke-width="1"/>
+            <text x="117" y="75" text-anchor="middle" font-size="7.5" fill="#00FF88" font-family="monospace" font-weight="600">Arch</text>
+            <text x="117" y="87" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Design</text>
+            <text x="117" y="96" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">System</text>
+            <!-- Arrow 2 -->
+            <line x1="142" y1="79" x2="148" y2="79" stroke="#4A5568" stroke-width="1.5"/>
+            <polygon points="148,76 154,79 148,82" fill="#4A5568"/>
+            <!-- Node 3: Diag -->
+            <rect x="154" y="58" width="50" height="42" rx="6" fill="#0F1F3D" stroke="#A78BFA" stroke-width="1"/>
+            <text x="179" y="75" text-anchor="middle" font-size="7.5" fill="#A78BFA" font-family="monospace" font-weight="600">Diag</text>
+            <text x="179" y="87" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Render</text>
+            <text x="179" y="96" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Diagram</text>
+            <!-- Arrow 3 -->
+            <line x1="204" y1="79" x2="210" y2="79" stroke="#4A5568" stroke-width="1.5"/>
+            <polygon points="210,76 216,79 210,82" fill="#4A5568"/>
+            <!-- Node 4: Cost -->
+            <rect x="216" y="58" width="50" height="42" rx="6" fill="#0F1F3D" stroke="#FFB800" stroke-width="1"/>
+            <text x="241" y="75" text-anchor="middle" font-size="7.5" fill="#FFB800" font-family="monospace" font-weight="600">Cost</text>
+            <text x="241" y="87" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Estimate</text>
+            <text x="241" y="96" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Spend</text>
+            <!-- Arrow 4 -->
+            <line x1="266" y1="79" x2="272" y2="79" stroke="#4A5568" stroke-width="1.5"/>
+            <polygon points="272,76 278,79 272,82" fill="#4A5568"/>
+            <!-- Node 5: Sec -->
+            <rect x="278" y="58" width="50" height="42" rx="6" fill="#0F1F3D" stroke="#FF5F57" stroke-width="1"/>
+            <text x="303" y="75" text-anchor="middle" font-size="7.5" fill="#FF5F57" font-family="monospace" font-weight="600">Sec</text>
+            <text x="303" y="87" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Audit</text>
+            <text x="303" y="96" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Risks</text>
+            <!-- Arrow 5 -->
+            <line x1="328" y1="79" x2="334" y2="79" stroke="#4A5568" stroke-width="1.5"/>
+            <polygon points="334,76 340,79 334,82" fill="#4A5568"/>
+            <!-- Node 6: IaC -->
+            <rect x="340" y="58" width="50" height="42" rx="6" fill="#0F1F3D" stroke="#00D4FF" stroke-width="1.5"/>
+            <text x="365" y="75" text-anchor="middle" font-size="7.5" fill="#00D4FF" font-family="monospace" font-weight="600">IaC</text>
+            <text x="365" y="87" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Write</text>
+            <text x="365" y="96" text-anchor="middle" font-size="6" fill="#607A94" font-family="Inter, sans-serif">Terraform</text>
+            <!-- Animated flow dots -->
+            <circle r="4" fill="#00D4FF">
+              <animateMotion dur="3s" repeatCount="indefinite" begin="0s" calcMode="linear"><mpath href="#ca-path"/></animateMotion>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="3s" repeatCount="indefinite" begin="0s"/>
+            </circle>
+            <circle r="4" fill="#00FF88">
+              <animateMotion dur="3s" repeatCount="indefinite" begin="1s" calcMode="linear"><mpath href="#ca-path"/></animateMotion>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="3s" repeatCount="indefinite" begin="1s"/>
+            </circle>
+            <circle r="4" fill="#FFB800">
+              <animateMotion dur="3s" repeatCount="indefinite" begin="2s" calcMode="linear"><mpath href="#ca-path"/></animateMotion>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="3s" repeatCount="indefinite" begin="2s"/>
+            </circle>
+            <!-- Output panel -->
+            <rect x="10" y="108" width="400" height="65" rx="6" fill="#0A1628" stroke="#1A2B45"/>
+            <text x="20" y="122" font-size="6.5" fill="#4A5568" font-family="monospace" font-weight="600">GENERATED OUTPUT</text>
+            <text x="20" y="136" font-size="7.5" fill="#00D4FF" font-family="monospace">Services: ECS · ALB · RDS Aurora · ElastiCache · KMS</text>
+            <text x="20" y="149" font-size="7.5" fill="#00FF88" font-family="monospace">Cost: ~$487/mo</text>
+            <text x="150" y="149" font-size="7.5" fill="#00FF88" font-family="monospace">Security: 0 critical findings</text>
+            <text x="20" y="162" font-size="7.5" fill="#A78BFA" font-family="monospace">Terraform: main.tf · variables.tf · outputs.tf</text>
+            <!-- Footer -->
+            <text x="210" y="196" text-anchor="middle" font-size="8.5" fill="#4A5568" font-family="Inter, sans-serif">Powered by LangGraph · Amazon Bedrock (Claude)</text>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="proj-badge badge-cyan">Multi-Agent AI · LangGraph · Bedrock</div>
+          <div class="proj-title">CloudArchitect AI</div>
+          <div class="proj-subtitle">Agentic AWS Architecture Generator</div>
+          <p class="proj-desc">6-agent LangGraph pipeline that converts a plain-English prompt into a complete AWS architecture — diagram, cost estimate, security review, and production-ready Terraform in one shot.</p>
+          <div class="card-tags">
+            <div class="proj-tags">
+              <span class="proj-tag">LangGraph</span>
+              <span class="proj-tag">Amazon Bedrock</span>
+              <span class="proj-tag">FastAPI</span>
+              <span class="proj-tag">Lambda</span>
+              <span class="proj-tag">Terraform</span>
+            </div>
+            <div class="proj-links">
+              <a href="https://github.com/UwaisMansuri22/cloudarchitect-ai" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- 1. AlarmBrain -->
       <div class="project-card featured alarmbrain fade-up">
@@ -1112,7 +1277,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
           <div class="proj-badge badge-cyan">⚡ GenAI · Cloud · Healthcare</div>
           <div class="proj-title">AlarmBrain</div>
           <div class="proj-subtitle">AI Incident Intelligence</div>
-          <p class="proj-desc">Transforms raw CloudWatch alarms into structured incident briefs with probable cause, immediate actions, and healthcare business impact. Built from 4 years of production SRE at Cigna.</p>
+          <p class="proj-desc">Transforms raw CloudWatch alarms into structured incident briefs — probable cause, immediate actions, and healthcare business impact — in under 3 seconds across 8 AWS service types.</p>
           <div class="card-tags">
             <div class="proj-tags">
               <span class="proj-tag">FastAPI</span>
@@ -1432,11 +1597,12 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
         <div class="echo-powered">◆ <span>Amazon Bedrock</span> · Claude</div>
       </div>
       <div class="echo-pills">
-        <button class="echo-pill" data-q="What is AlarmBrain?">What is AlarmBrain?</button>
-        <button class="echo-pill" data-q="What's Uwais's experience?">What's Uwais's experience?</button>
-        <button class="echo-pill" data-q="Does he need H1B sponsorship?">Does he need H1B sponsorship?</button>
-        <button class="echo-pill" data-q="What roles is he open to?">What roles is he open to?</button>
+        <button class="echo-pill" data-q="What makes Uwais stand out as an engineer?">What makes Uwais stand out?</button>
+        <button class="echo-pill" data-q="What's Uwais's experience at Cigna Healthcare?">Experience at Cigna</button>
         <button class="echo-pill" data-q="Tell me about ClinicalScribe">Tell me about ClinicalScribe</button>
+        <button class="echo-pill" data-q="What AWS services has Uwais worked with in production?">AWS in production</button>
+        <button class="echo-pill" data-q="What roles is he open to?">Open roles</button>
+        <button class="echo-pill" data-q="What is AlarmBrain?">What is AlarmBrain?</button>
       </div>
       <div class="echo-messages" id="echo-messages">
         <div class="echo-msg bot">
@@ -1466,7 +1632,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
         <div class="tl-accent-bar"></div>
         <div class="tl-header">
           <div class="tl-header-left">
-            <div class="tl-period">Jan 2023 – Present</div>
+            <div class="tl-period">Jan 2022 – Present</div>
             <div class="tl-title">Cloud Platform &amp; Reliability Engineer</div>
             <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare · Bloomfield, CT</span></div>
           </div>
@@ -1631,28 +1797,13 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
       <span class="section-label">Credentials</span>
       <h2 class="section-title">Certifications</h2>
     </div>
-    <div class="certs-grid fade-up" style="transition-delay:0.1s">
-      <div class="cert-card">
-        <div class="cert-icon blue">☁</div>
-        <div class="cert-name">Microsoft Azure Fundamentals</div>
-        <div class="cert-issuer">Microsoft · AZ-900</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon orange">⚡</div>
-        <div class="cert-name">AWS Certified Developer Associate</div>
-        <div class="cert-issuer">Amazon Web Services</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon orange">☁</div>
-        <div class="cert-name">AWS Certified Cloud Practitioner</div>
-        <div class="cert-issuer">Amazon Web Services</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon purple">🤖</div>
-        <div class="cert-name">AWS Partner: Generative AI Essentials</div>
-        <div class="cert-issuer">Amazon Web Services</div>
-      </div>
+    <div class="credly-grid fade-up" style="transition-delay:0.1s">
+      <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="5cbf3b89-a727-4509-9240-6644ccd55569" data-share-badge-host="https://www.credly.com"></div>
+      <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a9c5c69f-9035-49f0-86e5-860dfb2dd95f" data-share-badge-host="https://www.credly.com"></div>
+      <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="64399cce-08fd-4f09-9700-47142dff78d0" data-share-badge-host="https://www.credly.com"></div>
+      <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="01d3650c-e050-4c08-b5ed-3fae7a4db9dc" data-share-badge-host="https://www.credly.com"></div>
     </div>
+    <script type="text/javascript" async src="https://cdn.credly.com/assets/utilities/embed.js"></script>
   </div>
 </section>
 
@@ -1665,7 +1816,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
     </div>
     <div class="contact-grid fade-up" style="transition-delay:0.1s">
       <div class="contact-info">
-        <h3>Open to new opportunities.</h3>
+        <h3>Let's work together.</h3>
         <p>Targeting Senior Cloud Engineer, SRE, and AI Platform Engineer roles where I can bring both deep AWS expertise and hands-on GenAI experience.</p>
         <!-- <div class="h1b-notice">⚠ H1B visa sponsorship required</div> -->
         <div class="contact-links">
