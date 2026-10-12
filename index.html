@@ -192,33 +192,38 @@ section { padding: 6rem 0; }
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
 }
+/* BUTTONS: one primary style + one secondary style, shared hover / press / focus */
 .btn {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.5rem; border-radius: 8px;
-  font-size: 0.875rem; font-weight: 600;
-  transition: all 0.25s var(--ease);
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid transparent;
+  font-size: 0.875rem; font-weight: 600; line-height: 1.2; cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.btn-primary {
-  background: var(--accent-primary); color: #050A14;
+/* Primary: filled cyan */
+.btn-primary, .proj-link.live, .form-submit, .echo-send {
+  background: var(--accent-primary); color: #050A14; border-color: var(--accent-primary);
 }
-.btn-primary:hover {
-  background: #fff; transform: translateY(-2px);
+.btn-primary:hover, .proj-link.live:hover, .form-submit:hover:not(:disabled), .echo-send:hover:not(:disabled) {
+  background: #fff; border-color: #fff; color: #050A14;
+  transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,212,255,0.35);
 }
-.btn-outline {
-  border: 1px solid var(--border); color: var(--text-primary);
+/* Secondary: outline (btn-ghost kept as an alias so older markup still matches) */
+.btn-outline, .btn-ghost, .proj-link.gh {
+  background: transparent; border: 1px solid var(--border); color: var(--text-primary);
 }
-.btn-outline:hover {
+.btn-outline:hover, .btn-ghost:hover, .proj-link.gh:hover {
   border-color: var(--accent-primary); color: var(--accent-primary);
   transform: translateY(-2px);
   box-shadow: 0 0 16px var(--border-glow);
 }
-.btn-ghost {
-  border: 1px solid var(--border); color: var(--text-secondary);
+/* Press and keyboard focus, identical for every button */
+.btn:active, .proj-link:active, .form-submit:active:not(:disabled), .echo-send:active:not(:disabled) {
+  transform: translateY(0); box-shadow: none;
 }
-.btn-ghost:hover {
-  border-color: var(--text-secondary); color: var(--text-primary);
-  transform: translateY(-2px);
+.btn:focus-visible, .proj-link:focus-visible, .form-submit:focus-visible, .echo-send:focus-visible,
+.contact-link:focus-visible, .echo-pill:focus-visible {
+  outline: 2px solid var(--accent-primary); outline-offset: 3px;
 }
 
 /* TERMINAL */
@@ -450,16 +455,9 @@ section { padding: 6rem 0; }
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.55rem 1.1rem; border-radius: 8px;
   font-size: 0.8rem; font-weight: 600;
-  transition: all 0.2s var(--ease);
+  border: 1px solid transparent;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.proj-link.live {
-  background: var(--accent-primary); color: #050A14;
-}
-.proj-link.live:hover { background: #fff; box-shadow: 0 4px 16px rgba(0,212,255,0.4); }
-.proj-link.gh {
-  border: 1px solid var(--border); color: var(--text-secondary);
-}
-.proj-link.gh:hover { border-color: var(--text-primary); color: var(--text-primary); }
 
 /* CloudArchitect AI card hover */
 .project-card.cloudarchitect-ai:hover {
@@ -694,7 +692,6 @@ section { padding: 6rem 0; }
   cursor: pointer; transition: all 0.2s var(--ease);
   display: flex; align-items: center; gap: 0.4rem;
 }
-.echo-send:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,212,255,0.35); }
 .echo-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* TIMELINE */
@@ -899,10 +896,9 @@ section { padding: 6rem 0; }
   background: var(--accent-primary); color: #050A14;
   border: none; border-radius: 10px;
   padding: 0.875rem 1.5rem; font-weight: 700; font-size: 0.9rem;
-  cursor: pointer; transition: all 0.2s var(--ease);
+  cursor: pointer; transition: background-color 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
   align-self: flex-start;
 }
-.form-submit:hover { background: #fff; box-shadow: 0 4px 16px rgba(0,212,255,0.35); }
 .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 .form-status { font-size: 0.82rem; padding: 0.5rem 0; }
 .form-status.ok  { color: var(--accent-green); }
@@ -1006,8 +1002,10 @@ body.light-mode #navbar .nav-links a:hover { color: #0066CC; }
 body.light-mode #navbar .nav-brand { color: #0A1628; }
 body.light-mode #navbar .nav-brand span { color: #0066CC; }
 /* btn-outline readable in light mode */
-body.light-mode .btn-outline { color: #0A1628; border-color: #0A1628; }
-body.light-mode .btn-outline:hover { color: #0066CC; border-color: #0066CC; }
+body.light-mode .btn-outline, body.light-mode .btn-ghost, body.light-mode .proj-link.gh { color: #0A1628; border-color: #0A1628; }
+body.light-mode .btn-outline:hover, body.light-mode .btn-ghost:hover, body.light-mode .proj-link.gh:hover { color: #0066CC; border-color: #0066CC; }
+body.light-mode .btn-primary, body.light-mode .proj-link.live, body.light-mode .form-submit, body.light-mode .echo-send { color: #fff; }
+body.light-mode .btn-primary:hover, body.light-mode .proj-link.live:hover, body.light-mode .form-submit:hover:not(:disabled), body.light-mode .echo-send:hover:not(:disabled) { background: #0A1628; border-color: #0A1628; color: #fff; box-shadow: 0 8px 24px rgba(0,102,204,0.3); }
 /* Echo section always stays dark */
 body.light-mode #echo {
   --bg-surface: #0A1628;
@@ -1071,9 +1069,9 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
       <h1>Uwais<br><span>Mansuri</span></h1>
       <p class="hero-sub">Building secure, production-grade GenAI systems and serverless platforms for regulated healthcare.</p>
       <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">→ View Projects</a>
-        <a href="#echo" class="btn btn-outline">◆ Talk to Echo</a>
-        <a href="assets/Uwais-Mansuri-Resume.pdf" class="btn btn-ghost" target="_blank" rel="noopener">View Resume ↗</a>
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#echo" class="btn btn-outline">Talk to Echo →</a>
+        <a href="assets/Uwais-Mansuri-Resume.pdf" class="btn btn-outline" target="_blank" rel="noopener">View Resume ↗</a>
       </div>
     </div>
     <div class="hero-right">
@@ -1275,8 +1273,8 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
               <span class="proj-tag">Terraform</span>
             </div>
             <div class="proj-links">
-              <a href="https://da2a65ucsg.execute-api.us-east-1.amazonaws.com/" target="_blank" rel="noreferrer" class="proj-link live">→ Live Demo</a>
-              <a href="https://github.com/UwaisMansuri22/cloudarchitect-ai" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+              <a href="https://da2a65ucsg.execute-api.us-east-1.amazonaws.com/" target="_blank" rel="noreferrer" class="proj-link live">Live Demo ↗</a>
+              <a href="https://github.com/UwaisMansuri22/cloudarchitect-ai" target="_blank" rel="noreferrer" class="proj-link gh">GitHub ↗</a>
             </div>
           </div>
         </div>
@@ -1320,8 +1318,8 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
               <span class="proj-tag">Terraform</span>
             </div>
             <div class="proj-links">
-              <a href="https://ctw2dztdc9.execute-api.us-east-1.amazonaws.com" target="_blank" rel="noreferrer" class="proj-link live">→ Live Demo</a>
-              <a href="https://github.com/UwaisMansuri22/AlarmBrain" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+              <a href="https://ctw2dztdc9.execute-api.us-east-1.amazonaws.com" target="_blank" rel="noreferrer" class="proj-link live">Live Demo ↗</a>
+              <a href="https://github.com/UwaisMansuri22/AlarmBrain" target="_blank" rel="noreferrer" class="proj-link gh">GitHub ↗</a>
             </div>
           </div>
         </div>
@@ -1397,7 +1395,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
               <span class="proj-tag">Terraform</span>
             </div>
             <div class="proj-links">
-              <a href="https://github.com/UwaisMansuri22/ClinicalScribe" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+              <a href="https://github.com/UwaisMansuri22/ClinicalScribe" target="_blank" rel="noreferrer" class="proj-link gh">GitHub ↗</a>
             </div>
           </div>
         </div>
@@ -1460,8 +1458,8 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
               <span class="proj-tag">Bedrock</span>
             </div>
             <div class="proj-links">
-              <a href="https://uwaismansuri.com" target="_blank" rel="noreferrer" class="proj-link live">→ Live Demo</a>
-              <a href="https://github.com/UwaisMansuri22/Portfolio-Website" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+              <a href="https://uwaismansuri.com" target="_blank" rel="noreferrer" class="proj-link live">Live Demo ↗</a>
+              <a href="https://github.com/UwaisMansuri22/Portfolio-Website" target="_blank" rel="noreferrer" class="proj-link gh">GitHub ↗</a>
             </div>
           </div>
         </div>
@@ -1533,7 +1531,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
               <span class="proj-tag">Step Functions</span>
             </div>
             <div class="proj-links">
-              <a href="https://medium.com/@uwais22/building-a-scalable-serverless-etl-pipeline-with-aws-c0222b4ff0a5" target="_blank" rel="noreferrer" class="proj-link gh">↗ Medium</a>
+              <a href="https://medium.com/@uwais22/building-a-scalable-serverless-etl-pipeline-with-aws-c0222b4ff0a5" target="_blank" rel="noreferrer" class="proj-link gh">Medium ↗</a>
             </div>
           </div>
         </div>
@@ -1604,7 +1602,7 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
               <span class="proj-tag">Python</span>
             </div>
             <div class="proj-links">
-              <a href="https://github.com/UwaisMansuri22/Skin-Disease-Detection-Using-CNN" target="_blank" rel="noreferrer" class="proj-link gh">&lt;/&gt; GitHub</a>
+              <a href="https://github.com/UwaisMansuri22/Skin-Disease-Detection-Using-CNN" target="_blank" rel="noreferrer" class="proj-link gh">GitHub ↗</a>
             </div>
           </div>
         </div>
