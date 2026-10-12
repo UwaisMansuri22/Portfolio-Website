@@ -92,7 +92,7 @@ section { padding: 6rem 0; }
   box-shadow: 0 1px 0 var(--border);
 }
 .nav-brand {
-  display: flex; align-items: center; gap: 0.55rem;
+  display: flex; align-items: center; gap: 0.55rem; white-space: nowrap; flex-shrink: 0;
   font-weight: 700; font-size: 1.05rem; color: var(--text-primary);
   letter-spacing: -0.01em;
 }
@@ -139,6 +139,7 @@ section { padding: 6rem 0; }
 .nav-mobile a { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); transition: color 0.2s; }
 .nav-mobile a:hover { color: var(--accent-primary); }
 .nav-mobile-close {
+  display: none; /* the menu button above already turns into a close (X) icon */
   position: absolute; top: 1.5rem; right: 2rem;
   font-size: 1.5rem; color: var(--text-secondary); background: none; border: none; cursor: pointer;
 }
@@ -925,9 +926,15 @@ footer {
   .stack-grid { grid-template-columns: 1fr; }
   .projects-carousel { padding: 0 20px; }
 }
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
+  .nav-links { gap: 1.4rem; }
+}
+@media (max-width: 1024px) {
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
+  #navbar .theme-toggle { margin-left: auto; margin-right: 12px; }
+}
+@media (max-width: 600px) {
   section { padding: 4rem 0; }
   .hero h1 { font-size: 2.8rem; }
   .hero-btns { flex-direction: column; }
@@ -959,6 +966,7 @@ section, footer { position: relative; z-index: 1; }
   box-shadow: 0 0 12px rgba(0,212,255,0.3);
 }
 @media (max-width: 600px) { .theme-toggle { margin-left: 8px; } }
+@media (max-width: 1024px) { #navbar .theme-toggle { margin-left: auto; margin-right: 12px; } }
 
 /* FIX 8 — LIGHT MODE */
 body.light-mode {
@@ -1047,8 +1055,9 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
 <div class="nav-mobile" id="nav-mobile">
   <button class="nav-mobile-close" id="nav-mobile-close">✕</button>
   <a href="#home">Home</a>
+  <a href="#about">About</a>
   <a href="#projects">Projects</a>
-  <a href="#echo">Echo AI</a>
+  <a href="#echo">Echo</a>
   <a href="#experience">Experience</a>
   <a href="#stack">Tech Stack</a>
   <a href="#contact">Contact</a>
@@ -1099,15 +1108,15 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
             <div class="about-stat-label">Yrs Production</div>
           </div>
           <div class="about-stat">
-            <div class="about-stat-num">25%</div>
-            <div class="about-stat-label">MTTR Reduction</div>
+            <div class="about-stat-num">~3K</div>
+            <div class="about-stat-label">Daily Clinical Users</div>
           </div>
           <div class="about-stat">
-            <div class="about-stat-num">4</div>
-            <div class="about-stat-label">AWS Certifications</div>
+            <div class="about-stat-num">49</div>
+            <div class="about-stat-label">LLM Red-Team Tests</div>
           </div>
           <div class="about-stat">
-            <div class="about-stat-num">2</div>
+            <div class="about-stat-num">3</div>
             <div class="about-stat-label">AI Tools Shipped</div>
           </div>
         </div>
@@ -1135,8 +1144,8 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
             <div class="about-edu-icon bs">🎓</div>
             <div>
               <div class="about-edu-degree">B.Tech Computer Engineering</div>
-              <div class="about-edu-school">Indus University · Gujarat, India</div>
-              <div class="about-edu-year">2018</div>
+              <div class="about-edu-school">Indus Institute of Technology · Gujarat, India</div>
+              <div class="about-edu-year">2019</div>
             </div>
           </div>
         </div>
@@ -1654,70 +1663,117 @@ body.light-mode .tl-dot { background: #0066CC; box-shadow: 0 0 12px rgba(0,102,2
     </div>
     <div class="timeline">
 
-      <!-- Role 1 -->
-      <div class="tl-entry fade-up" style="transition-delay:0.1s">
+      <div class="tl-entry fade-up" style="transition-delay:0.1s;grid-column:1/-1;">
         <div class="tl-accent-bar"></div>
         <div class="tl-header">
           <div class="tl-header-left">
-            <div class="tl-period">Jan 2022 – Present</div>
-            <div class="tl-title">Cloud Platform &amp; Reliability Engineer</div>
-            <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare · Bloomfield, CT</span></div>
+            <div class="tl-period">Apr 2026 – Present</div>
+            <div class="tl-title">GenAI Platform Engineer</div>
+            <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare (Evernorth)</span></div>
           </div>
           <span class="tl-badge">Current</span>
         </div>
         <div class="tl-chips">
-          <span class="tl-chip">EC2</span>
-          <span class="tl-chip">EKS</span>
+          <span class="tl-chip">LangGraph</span>
+          <span class="tl-chip">PydanticAI</span>
+          <span class="tl-chip">LiteLLM</span>
+          <span class="tl-chip">Anthropic Claude</span>
+          <span class="tl-chip">Bedrock AgentCore</span>
           <span class="tl-chip">Lambda</span>
-          <span class="tl-chip">RDS</span>
-          <span class="tl-chip">DynamoDB</span>
-          <span class="tl-chip">SQS / SNS</span>
           <span class="tl-chip">API Gateway</span>
-          <span class="tl-chip">ALB / NLB</span>
-          <span class="tl-chip">CloudWatch</span>
-          <span class="tl-chip">Grafana</span>
-          <span class="tl-chip">Dynatrace</span>
-          <span class="tl-chip">Splunk</span>
-          <span class="tl-chip">ServiceNow</span>
+          <span class="tl-chip">DynamoDB</span>
+          <span class="tl-chip">KMS</span>
           <span class="tl-chip">Terraform</span>
+          <span class="tl-chip">OpenTelemetry</span>
+          <span class="tl-chip">LangSmith</span>
         </div>
         <div class="tl-divider"></div>
         <ul class="tl-items">
-          <li class="tl-item">Operated production AWS infrastructure for Cigna's insurance and pharmacy platforms — Lambda, EC2, RDS, SQS, API Gateway — supporting high-volume healthcare transactions.</li>
-          <li class="tl-item">Managed 12–15 P2–P4 incidents per month; performed RCA across compute, storage, and networking, reducing MTTR by 25–30% through structured runbook development.</li>
-          <li class="tl-item">Resolved a critical EC2 Auto Scaling failure where instances stopped registering with ALB target groups, restoring traffic routing before SLA breach.</li>
-          <li class="tl-item">Built 3 Grafana dashboards (10+ panels each) and implemented Dynatrace APM and synthetic monitoring across API endpoints and scheduled health checks.</li>
-          <li class="tl-item">Authored runbooks, SOPs, and RCA documentation; acted as incident resolver and war-room participant for high-severity events via ServiceNow and Splunk.</li>
+          <li class="tl-item">Architected and productionized an AWS serverless GenAI service that gives ~3,000 daily clinical users role-specific pre-encounter summaries from patient data via parallel retrieval, a de-identified LLM boundary, and deterministic post-processing.</li>
+          <li class="tl-item">Reduced generated output by about 700 tokens per request in a measured workflow through deterministic Python extraction; enabled prompt caching for reusable instructions and context to reduce repeated input processing and inference cost.</li>
+          <li class="tl-item">Designed a 49-case OWASP LLM Top 10-aligned adversarial and API negative-testing suite covering prompt injection, data leakage, unsafe output, resource exhaustion, schema validation, and JWT authentication; fixed a malformed-token crash and passed all defined scenarios using synthetic non-PHI data and live model calls.</li>
+          <li class="tl-item">Engineered deadline-aware execution with four parallel data fetches, concurrent LLM calls, timeouts, circuit breakers, and tiered fallbacks; corrected parallel tool-call output loss through exhaustive PydanticAI execution and deterministic merge and deduplication.</li>
+          <li class="tl-item">Codified GenAI infrastructure in Terraform across Lambda, API Gateway, IAM, KMS, Secrets Manager, networking, DynamoDB, CloudWatch alarms, and scheduled Provisioned Concurrency; delivered reusable CI/CD with structured logging and OpenTelemetry/LangSmith tracing.</li>
         </ul>
       </div>
 
-      <!-- Role 2 -->
-      <div class="tl-entry tl-purple fade-up" style="transition-delay:0.2s">
+      <div class="tl-entry tl-purple fade-up" style="transition-delay:0.15s;grid-column:1/-1;">
         <div class="tl-accent-bar purple"></div>
         <div class="tl-header">
           <div class="tl-header-left">
-            <div class="tl-period purple">Feb 2022 – Dec 2022</div>
-            <div class="tl-title">Python API Developer</div>
-            <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare · Bloomfield, CT</span></div>
+            <div class="tl-period purple">Jan 2023 – Mar 2026</div>
+            <div class="tl-title">Cloud and Backend Platform Engineer</div>
+            <div class="tl-company-row">TCS &nbsp;<span>· Cigna Healthcare</span></div>
           </div>
         </div>
         <div class="tl-chips">
           <span class="tl-chip">Python</span>
           <span class="tl-chip">Lambda</span>
           <span class="tl-chip">API Gateway</span>
-          <span class="tl-chip">OAuth 2.0</span>
-          <span class="tl-chip">Okta</span>
-          <span class="tl-chip">Terraform</span>
-          <span class="tl-chip">Postman</span>
-          <span class="tl-chip">VPC</span>
-          <span class="tl-chip">IAM</span>
+          <span class="tl-chip">S3</span>
+          <span class="tl-chip">SQS / DLQs</span>
+          <span class="tl-chip">DynamoDB</span>
+          <span class="tl-chip">Aurora PostgreSQL</span>
+          <span class="tl-chip">OpenSearch</span>
+          <span class="tl-chip">Comprehend</span>
+          <span class="tl-chip">EventBridge</span>
+          <span class="tl-chip">EKS</span>
+          <span class="tl-chip">CloudWatch</span>
+          <span class="tl-chip">Grafana</span>
+          <span class="tl-chip">Splunk</span>
+          <span class="tl-chip">Dynatrace</span>
         </div>
         <div class="tl-divider"></div>
         <ul class="tl-items">
-          <li class="tl-item">Developed Python-based APIs using AWS Lambda and API Gateway for secure, scalable communication between distributed healthcare systems.</li>
-          <li class="tl-item">Implemented OAuth 2.0 with Okta and Lambda Authorizers to enforce access control and meet compliance requirements.</li>
-          <li class="tl-item">Automated infrastructure and deployment workflows using Terraform and Python, cutting manual steps across release cycles.</li>
-          <li class="tl-item">Debugged and validated API integrations using Postman, reducing integration failures and improving cross-team release confidence.</li>
+          <li class="tl-item">Owned development and production support for an event-driven AWS platform shared by four enterprise applications, using Python, Lambda, API Gateway, S3, SQS/DLQs, DynamoDB, Aurora PostgreSQL, OpenSearch, and Amazon Comprehend.</li>
+          <li class="tl-item">Automated email intake from Pega by processing .eml files and attachments through S3, SQS, and Lambda; invoked a custom Comprehend model to classify RFP and non-RFP submissions, deduplicate events, and route downstream workflows.</li>
+          <li class="tl-item">Operated CDC and transformation pipelines that normalized JSON events and replicated data from raw to integrated tables; diagnosed Lambda failures and database check-constraint violations that interrupted replication.</li>
+          <li class="tl-item">Sustained 99.9% platform availability and met 98% of operational SLAs by tuning Lambda concurrency and throttling, resolving SQS delays and DLQs, and monitoring CloudWatch, Grafana, Splunk, and Dynatrace synthetics.</li>
+          <li class="tl-item">Led EKS release validation and pod recovery during production deployments; coordinated incident RCA and implemented VPC, subnet, and load-balancer improvements to strengthen release stability and recovery.</li>
+          <li class="tl-item">Secured API access with a scheduled Okta token-refresh workflow using EventBridge, Lambda, Secrets Manager, and DynamoDB, plus group-based authorization through a Lambda Authorizer.</li>
+        </ul>
+      </div>
+
+      <div class="tl-entry fade-up" style="transition-delay:0.2s;">
+        <div class="tl-accent-bar"></div>
+        <div class="tl-header">
+          <div class="tl-header-left">
+            <div class="tl-period">Feb 2022 – Dec 2022</div>
+            <div class="tl-title">Data Engineer</div>
+            <div class="tl-company-row">TCS &nbsp;<span>· Internal data platform</span></div>
+          </div>
+        </div>
+        <div class="tl-chips">
+          <span class="tl-chip">Python</span>
+          <span class="tl-chip">SQL</span>
+          <span class="tl-chip">Dimensional Modeling</span>
+          <span class="tl-chip">ETL</span>
+          <span class="tl-chip">Data Quality</span>
+        </div>
+        <div class="tl-divider"></div>
+        <ul class="tl-items">
+          <li class="tl-item">Designed dimensional data models (fact and dimension tables) and built Python and SQL ETL jobs with data-quality checks for an organization-wide data warehouse feeding business reporting; defined data-mart standards and reviewed designs, code, and test plans.</li>
+        </ul>
+      </div>
+
+      <div class="tl-entry tl-purple fade-up" style="transition-delay:0.25s;">
+        <div class="tl-accent-bar purple"></div>
+        <div class="tl-header">
+          <div class="tl-header-left">
+            <div class="tl-period purple">Sep 2020 – May 2021</div>
+            <div class="tl-title">Applied Data Science Project</div>
+            <div class="tl-company-row">Saint Peter's University &nbsp;<span>· Faculty-led Kmart project</span></div>
+          </div>
+        </div>
+        <div class="tl-chips">
+          <span class="tl-chip">Python</span>
+          <span class="tl-chip">Pandas</span>
+          <span class="tl-chip">scikit-learn</span>
+          <span class="tl-chip">NLP</span>
+        </div>
+        <div class="tl-divider"></div>
+        <ul class="tl-items">
+          <li class="tl-item">Built a customer-review sentiment classifier using Python, Pandas, and scikit-learn, identifying positive and negative feedback and operational themes such as delivery speed and logistics quality.</li>
         </ul>
       </div>
 
